@@ -1,0 +1,16 @@
+{
+  "id": "01a077d3-d62e-74a4-b12b-361245b5e383",
+  "type": "text-to-image",
+  "ai_model": "nano-banana-pro",
+  "prompt": "Original industrial sci-fi arcade vehicle arena game, stylized believable hard-surface game art, large readable shapes, bone-white painted panels and dark graphite chassis, safety-orange accents, restrained cyan lighting, consistent scale, crisp edges, modest material wear, clean functional silhouettes. Original designs; no existing franchise logos or recognizable franchise equipment. No text, no watermarks. Asset references use an even neutral studio background, soft grounded shadows, full uncropped subject, and minimal perspective distortion.\n\nA single original sporty industrial sci-fi four-wheeled ATV, isolated front-left three-quarter studio view. Exactly four chunky rubber tires, exposed independent suspension, short wheelbase, wide stance, orange armored body panels, charcoal frame, compact saddle seat, handlebars, visible footrests, small cyan headlamps. Agile low center of mass, mechanically plausible wheel clearances and seat position. No mounted weapons, no rider, no enclosed cabin, no extra wheels. Entire vehicle visible on a light neutral background. Clean reference for later 3D modeling with separated wheel forms.",
+  "status": "SUCCEEDED",
+  "progress": 100,
+  "created_at": 1788716766779,
+  "started_at": 1788716766782,
+  "finished_at": 1788716793049,
+  "expires_at": 1788975993049,
+  "image_urls": [
+    "https://assets.meshy.ai/eae914b7-b548-4f76-806c-aad9546e223a/uploads/image_01a077d3-d62e-74a4-b12b-361245b5e383_0.png?Expires=1788975993&Signature=iQhFH8Zxg5wRk7dad5grmPQ6p9P8ATIlNCxzmAkiN9dRSnlZZ6NJ2uxkBGRuiEyb50l9Qo8Cpg8tgHWiwaTGrkWhLEtjcO30HjacjkjVazds534PigzNXRTck83D-uAa5cOHU2GhWdfEi~lxAsMWMW3376v4jI0-V4l~9~r89aTu5y1M4Kh-7L9St~NHRnpwb4zjAugOue~eaUk6Iq24mNGzk9qwUUbR8D6zOXLw0RYmLFLOK5B1bepRIR6hW7klVIQLf45h5-krGFdutyotIPEegE7qGMTP1FZqLpupLsX7TsUIX1LCKIXoqZ2mWXQpS1ut5V12kaMpW5ZCaLtCmw__&Key-Pair-Id=K1VGYTHIYLM9UM"
+  ],
+  "consumed_credits": 9
+}

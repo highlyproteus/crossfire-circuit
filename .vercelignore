@@ -1,0 +1,11 @@
+node_modules
+.playwright-cli
+work
+scripts
+*.png
+qa*.json
+*.zip
+.env*
+audio-generation.json
+audio-validation.json
+source-assets

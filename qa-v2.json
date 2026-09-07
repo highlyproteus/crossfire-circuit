@@ -1,0 +1,308 @@
+{
+  "course": {
+    "length": 2369.869909920534,
+    "checkpoints": [
+      0.1352,
+      0.2828,
+      0.438,
+      0.4868,
+      0.5848,
+      0.7026,
+      0.7744,
+      1
+    ],
+    "jumps": [
+      {
+        "index": 0,
+        "speed": 15,
+        "launchedSpeed": 14.084359169006348,
+        "launches": 1,
+        "landing": null,
+        "maxY": 29.858797073364258,
+        "phase": "dead",
+        "position": {
+          "x": -156.4251251220703,
+          "y": 5.5003662109375,
+          "z": 184
+        },
+        "distance": 20.328217449540624
+      },
+      {
+        "index": 0,
+        "speed": 22,
+        "launchedSpeed": 21.023473739624023,
+        "launches": 1,
+        "landing": null,
+        "maxY": 30.400571823120117,
+        "phase": "dead",
+        "position": {
+          "x": -169.03038024902344,
+          "y": 5.618518352508545,
+          "z": 184
+        },
+        "distance": 33.49416139354354
+      },
+      {
+        "index": 0,
+        "speed": 27,
+        "launchedSpeed": 26.973026275634766,
+        "launches": 1,
+        "landing": {
+          "frame": 105,
+          "speed": 25.326887130737305
+        },
+        "maxY": 31.097970962524414,
+        "phase": "racing",
+        "position": {
+          "x": -162.87474060058594,
+          "y": 25.055234909057617,
+          "z": 184
+        },
+        "distance": 26.911189421542083
+      },
+      {
+        "index": 1,
+        "speed": 15,
+        "launchedSpeed": 14.075167655944824,
+        "launches": 1,
+        "landing": null,
+        "maxY": 29.92293930053711,
+        "phase": "dead",
+        "position": {
+          "x": -102.53395080566406,
+          "y": 5.560553073883057,
+          "z": -184
+        },
+        "distance": 20.538872552644737
+      },
+      {
+        "index": 1,
+        "speed": 22,
+        "launchedSpeed": 21.007675170898438,
+        "launches": 1,
+        "landing": null,
+        "maxY": 30.500661849975586,
+        "phase": "dead",
+        "position": {
+          "x": -89.8248062133789,
+          "y": 5.711771011352539,
+          "z": -184
+        },
+        "distance": 33.70481649664766
+      },
+      {
+        "index": 1,
+        "speed": 27,
+        "launchedSpeed": 26.973026275634766,
+        "launches": 1,
+        "landing": {
+          "frame": 105,
+          "speed": 25.326887130737305
+        },
+        "maxY": 31.09841537475586,
+        "phase": "racing",
+        "position": {
+          "x": -96.30473327636719,
+          "y": 25.055681228637695,
+          "z": -184
+        },
+        "distance": 27.121844524646196
+      }
+    ],
+    "ai": {
+      "snapshot": {
+        "role": "driver",
+        "kills": 0,
+        "escaped": 0,
+        "cooldown": 0,
+        "launches": 4,
+        "phase": "finished",
+        "paused": false,
+        "practice": true,
+        "position": {
+          "x": 191.1817626953125,
+          "y": 24.992185592651367,
+          "z": -137.17263793945312
+        },
+        "yaw": 0.15134051514631913,
+        "speed": 15.335143647381345,
+        "grounded": true,
+        "checkpoint": 8,
+        "health": 100,
+        "elapsed": 398.3999999999663,
+        "deaths": 2,
+        "invulnerable": 0,
+        "warning": 0,
+        "shots": 0,
+        "rocketsFired": 0,
+        "sniperHits": 0,
+        "rocketHits": 0,
+        "blockedShots": 0,
+        "completedCheckpoints": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      "milestones": [
+        {
+          "frame": 2553,
+          "checkpoint": 1,
+          "deaths": 0
+        },
+        {
+          "frame": 6167,
+          "checkpoint": 2,
+          "deaths": 0
+        },
+        {
+          "frame": 6800,
+          "death": 1,
+          "t": 0.33611111111111114,
+          "p": {
+            "x": -176.5951385498047,
+            "y": 5.791774272918701,
+            "z": 207.15065002441406
+          }
+        },
+        {
+          "frame": 9641,
+          "checkpoint": 3,
+          "deaths": 1
+        },
+        {
+          "frame": 10969,
+          "checkpoint": 4,
+          "deaths": 1
+        },
+        {
+          "frame": 13299,
+          "checkpoint": 5,
+          "deaths": 1
+        },
+        {
+          "frame": 13825,
+          "death": 2,
+          "t": 0.6327777777777778,
+          "p": {
+            "x": -87.79837036132812,
+            "y": 5.796940803527832,
+            "z": -200.24078369140625
+          }
+        },
+        {
+          "frame": 15693,
+          "checkpoint": 6,
+          "deaths": 2
+        },
+        {
+          "frame": 17655,
+          "checkpoint": 7,
+          "deaths": 2
+        },
+        {
+          "frame": 24053,
+          "checkpoint": 8,
+          "deaths": 2
+        }
+      ]
+    }
+  },
+  "handlingAndTraffic": {
+    "checkpointJumps": [
+      {
+        "index": 0,
+        "landed": true,
+        "launches": 1,
+        "health": 100,
+        "speed": 25.326887130737305,
+        "phase": "racing"
+      },
+      {
+        "index": 1,
+        "landed": true,
+        "launches": 1,
+        "health": 100,
+        "speed": 25.326887130737305,
+        "phase": "racing"
+      }
+    ],
+    "slip": [
+      {
+        "grip": 2.3,
+        "lateral": 4.8726901443578985,
+        "yaw": 0.39384968798275927
+      },
+      {
+        "grip": 6.2,
+        "lateral": 3.263981682448792,
+        "yaw": 0.3938889490184818
+      }
+    ],
+    "traffic": {
+      "elapsed": 549.9999999998284,
+      "escaped": 3,
+      "bots": [
+        {
+          "checkpoint": 2,
+          "deaths": 1,
+          "phase": "racing",
+          "launches": 2
+        },
+        {
+          "checkpoint": 6,
+          "deaths": 2,
+          "phase": "racing",
+          "launches": 4
+        },
+        {
+          "checkpoint": 7,
+          "deaths": 2,
+          "phase": "racing",
+          "launches": 4
+        }
+      ]
+    }
+  },
+  "combat": {
+    "rifleFirst": {
+      "health": 35,
+      "hits": 1,
+      "cooldown": 0.85
+    },
+    "cooldownBlocked": true,
+    "rifleKill": {
+      "kills": 1,
+      "phase": "dead"
+    },
+    "coverHealth": 100,
+    "rocket": {
+      "kills": 2,
+      "hits": 1,
+      "phase": "dead",
+      "health": 0,
+      "remaining": 0
+    },
+    "creditedFall": 3,
+    "helmetHit": 0,
+    "recoverIgnored": true,
+    "pause": {
+      "elapsedFrozen": true,
+      "botsFrozen": true,
+      "shotBlocked": true
+    },
+    "restart": {
+      "kills": 0,
+      "escaped": 0,
+      "bots": 3
+    }
+  },
+  "layout": "extended-2.37km-8-checkpoints-12-barriers",
+  "assertions": "passed",
+  "limits": "Solo and three AI riders verified. No 25-player multiplayer or physical-device validation."
+}

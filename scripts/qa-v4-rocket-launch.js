@@ -1,0 +1,3 @@
+()=>{const d=window.gameDebug,s=d.sim,z={throttle:0,steer:0,brake:false};d.manual(true);s.start(false,'marksman');s.bots.forEach(b=>b.paused=true);const bot=s.bots[0],p=bot.position(),eye=s.markEye();bot.invulnerable=0;s.attackType='rocket';s.fireMarksman({x:p.x-6-eye.x,y:24-eye.y,z:p.z-eye.z});let hit=false,maxY=0,side=0;
+for(let i=0;i<500;i++){s.step(z);if(bot.blastTime>0){hit=true;bot.paused=false;}if(hit){maxY=Math.max(maxY,bot.position().y);side=Math.max(side,Math.hypot(bot.position().x-p.x,bot.position().z-p.z));}if(hit&&bot.phase==='dead')break;}
+return{hit,maxY,side,phase:bot.phase,kills:s.kills,hits:s.rocketHits,ammo:s.ammo.rocket};}

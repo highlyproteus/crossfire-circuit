@@ -1,0 +1,27 @@
+{
+  "project_name": "rider",
+  "folder": "20260906_130945_crossfire-model-rider_01a077e9",
+  "root_task_id": "01a077e9-765d-71fe-ad83-73f62bcf063c",
+  "created_at": "2026-09-06T13:13:12.970938",
+  "updated_at": "2026-09-06T13:14:44.444111",
+  "tasks": [
+    {
+      "task_id": "01a077e9-765d-71fe-ad83-73f62bcf063c",
+      "task_type": "image-to-3d",
+      "stage": "generated",
+      "files": [
+        "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_130945_crossfire-model-rider_01a077e9/model.glb"
+      ],
+      "created_at": "2026-09-06T13:13:12.970955"
+    },
+    {
+      "task_id": "01a077ec-aa10-77a9-8272-1c217aaeb40e",
+      "task_type": "rigging",
+      "stage": "rigged",
+      "files": [
+        "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_130945_crossfire-model-rider_01a077e9/rigged.glb"
+      ],
+      "created_at": "2026-09-06T13:14:44.444092"
+    }
+  ]
+}

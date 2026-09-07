@@ -1,0 +1,54 @@
+{
+  "title": "Crossfire Circuit concepts",
+  "generator": "Codex built-in image generation",
+  "images": [
+    {
+      "name": "Arena",
+      "source_path": "/Users/xtox/.codex/generated_images/01a077c5-53a8-7821-9d36-665ff86f236f/exec-4f4d30f3-c068-4f62-b7ca-8ad59d753bd0.png",
+      "prompt": "Use case: stylized-concept. Asset type: 3D arcade vehicle game arena concept, landscape 16:9. Create an original industrial sci-fi game concept titled in our planning Crossfire Circuit, but NO text in image. Wide elevated three-quarter view of an entire suspended ATV obstacle racetrack above a bottomless midnight blue void. A winding continuous LOOP surrounds a separate central raised sniper platform with a tiny marksman. Show empty space separating tower from track, and open mostly unguarded track edges. Track three ATV widths on broad sections, narrowing on dangerous sections. Include four cyan checkpoint arches with broad safe restart aprons, banked curves, one short deliberate jump with obvious landing, staggered thick cover walls breaking sight lines from the central tower. A few small orange four-wheel ATVs convey scale and racing. Bone-white large deck slabs, graphite exposed underslung framing, orange hazard stripes and vehicle panels, sparse cyan lights. Stylized believable hard-surface game art, clean geometry, readable coherent route, exciting height and danger, restrained material wear, dramatic directional lighting. NOT a ringworld, no recognizable existing franchise designs, no logos, no HUD, no typography, no ground under the track. Prioritize understandable layout and playable spaces over decorative greebles. This is the establishing visual for an original Halo Forge-inspired game mode, without copying Halo assets.",
+      "complete": true,
+      "image_path": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/concepts/01-arena.png",
+      "bytes": 2439074
+    },
+    {
+      "name": "ATV",
+      "source_path": "/Users/xtox/.codex/generated_images/01a077c5-53a8-7821-9d36-665ff86f236f/exec-b559d5e2-1cad-4bd4-bfae-beb05e516b48.png",
+      "prompt": "Use case: stylized-concept. Asset type: clean image-to-3D source reference for an original sci-fi arcade racing ATV. Single vehicle ONLY, square image. An agile orange four-wheeled all-terrain quad bike, front-left three-quarter studio view with long lens and mild perspective. Exactly FOUR large chunky rubber tires, wide planted stance, short wheelbase, exposed independent suspension, graphite tubular chassis, burnt safety-orange angular body panels with small bone-white accents, a compact black saddle that a human can actually straddle, realistic handlebars at seated arm height, usable footrests, little cyan headlights. Rear wheels and their separation from front wheels must read clearly. Low center of gravity, mechanically plausible proportions, clean disconnected tire silhouettes for future wheel rigging. Premium stylized hard-surface game asset render, large simple well-defined forms, minimal panel noise, restrained edge wear. No rider, no guns, no roof, no car cabin, no cargo boxes, no text, no logos, no existing franchise vehicles. Full uncropped subject fills 80% of frame on a seamless pale neutral gray background with soft studio light and subtle ground shadow. The palette belongs to a floating white/graphite/orange sci-fi obstacle arena with cyan checkpoints.",
+      "complete": true,
+      "image_path": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/concepts/02-atv.png",
+      "bytes": 1798075
+    },
+    {
+      "name": "Character",
+      "source_path": "/Users/xtox/.codex/generated_images/01a077c5-53a8-7821-9d36-665ff86f236f/exec-329329b4-dbd5-4c22-80bd-3a2e83af5fb6.png",
+      "prompt": "Use case: stylized-concept. Asset type: clean 3D character reference for an original ATV racing arena game. Portrait image. Exactly one full-body adult futuristic motorsport competitor standing in a neutral symmetrical A-pose, arms straight and slightly out from body, hands open with five natural fingers each, legs slightly apart, facing almost directly forward. Entire helmet, hands and boots uncropped with generous margin. Lean athletic ordinary human proportions, a charcoal flexible protective riding suit, bone-white compact shoulder/elbow/knee/shin armor plates, burnt orange chest harness and orange forearm accents, compact closed motorsport helmet with a narrow cyan visor. Protective but lightweight and flexible enough to sit astride a quad bike and reach handlebars. No oversized armor, no recognizable Halo armor, no cape, no backpack, no weapon, no extra equipment, no text, no logos. Soft even neutral studio lighting, pale light gray seamless backdrop, subtle ground shadow, minimal perspective distortion. High quality stylized believable game render with clean large forms, restrained surface wear and little clutter. Match an orange graphite and white sci-fi ATV and floating industrial arena, cyan accent light used sparingly. Rig-friendly clear gaps at armpits and between legs.",
+      "complete": true,
+      "image_path": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/concepts/03-character.png",
+      "bytes": 2051019
+    },
+    {
+      "name": "Sniper rifle",
+      "source_path": "/Users/xtox/.codex/generated_images/01a077c5-53a8-7821-9d36-665ff86f236f/exec-353807e0-60de-41bc-a75c-2a61031ee26f.png",
+      "prompt": "Use case: stylized-concept. Asset type: isolated fictional sniper rifle image reference for later 3D game asset generation. Landscape composition 3:2. Exactly ONE original futuristic sci-fi precision rifle game prop, perfectly uncropped horizontal near-side view with slight three-quarter depth, muzzle toward left and stock toward right. Readable long slender barrel shroud, compact rectangular scope with small cyan glass lens, bone-white angular receiver above a graphite grip and simple shoulder stock, small burnt-orange identification panel, clean functional outer silhouette. High-quality stylized believable hard-surface game render, simple large surfaces with restrained edge wear, same white/charcoal/orange/cyan family as an industrial sci-fi ATV racing arena. Full prop fills most of frame with margin around muzzle and stock, pale neutral-gray seamless studio backdrop and soft even light. No character, no hands, no ammunition display, no internal mechanisms, no cutaway, no schematics, no labels, no typography, no logo, no recognizable franchise weapon. The design must look lighter, narrower, and much longer than a bulky rocket launcher.",
+      "complete": true,
+      "image_path": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/concepts/04-sniper-rifle.png",
+      "bytes": 1682275
+    },
+    {
+      "name": "Rocket launcher",
+      "source_path": "/Users/xtox/.codex/generated_images/01a077c5-53a8-7821-9d36-665ff86f236f/exec-72d14040-835a-48a4-a95c-ff2cdcbb48ed.png",
+      "prompt": "Use case: stylized-concept. Asset type: isolated fictional rocket launcher reference for later 3D asset generation for an original ATV arena game. Landscape 3:2 image. One original sci-fi shoulder launcher, full uncropped near-side three-quarter studio view, muzzle left, rear right. A short thick SINGLE broad launch tube with large dark circular mouth, angular bone-white outer casing, burnt-orange safety panels, graphite back housing and shoulder support, compact offset sight and a carry handle on top, small cyan status light. Chunky simple silhouette clearly different from a long slender sniper rifle. Mechanical exterior treated as a fictional game prop, no cutaway, no technical instructions, no diagrams, no ammunition display. Stylized high-end believable hard-surface game render, simple clean forms, restrained scratches, pale neutral-gray seamless backdrop, diffuse studio lighting, subtle grounded shadow. Entire subject fills most of frame with even margin. No hands, no people, no labels, no words, no logos, no recognizable franchise design. Cohesive with a white graphite orange floating industrial sci-fi race course and orange quad bike.",
+      "complete": true,
+      "image_path": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/concepts/05-rocket-launcher.png",
+      "bytes": 2128027
+    },
+    {
+      "name": "Course kit",
+      "source_path": "/Users/xtox/.codex/generated_images/01a077c5-53a8-7821-9d36-665ff86f236f/exec-6ab5307c-9e63-4dfe-8de4-4a3cdac7cf00.png",
+      "prompt": "Use case: stylized-concept. Asset type: modular track construction reference sheet for an original floating sci-fi ATV obstacle race. Landscape 16:9, six separated clear isometric vignettes arranged in a spacious 3 columns by 2 rows composition on a uniform midnight navy backdrop. Components: (1) broad straight deck slab with exposed graphite support beams; (2) a banked 90-degree turn deck with mostly open edges; (3) a short takeoff ramp paired with a separate landing deck with a small jump gap; (4) one thick tall cover wall on a small deck base that blocks shots; (5) a cyan glowing checkpoint arch spanning a broad safe restart apron; (6) separate elevated central octagonal marksman platform, low partial parapet and a short visible underslung support structure. These are pieces of one coherent original industrial sci-fi game kit: bone-white deck surfaces, graphite underslung trusses and chassis, orange hazard stripes, minimal cyan light at checkpoints. Geometry mostly chunky and simple, clean modular joining edges, stylized plausible game asset rendering with restrained edge wear and very little tiny panel noise. Strong silhouettes and readable surfaces. No ground environment, no people, no cars, no weapons, no text, no labels, no numbers, no logos. All six vignettes entirely in frame with generous separation. A design sheet to guide procedural construction, not one connected racetrack, no extra components.",
+      "complete": true,
+      "image_path": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/concepts/06-course-kit.png",
+      "bytes": 1660835
+    }
+  ]
+}

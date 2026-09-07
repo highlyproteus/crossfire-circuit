@@ -1,0 +1,42 @@
+{
+  "name": "crossfire-circuit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5190 --strictPort",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5190 --strictPort",
+    "assets:build": "node scripts/prepare-atv.mjs && node scripts/optimize-assets.mjs",
+    "server": "tsx server/index.ts",
+    "check": "tsc --noEmit",
+    "test:multiplayer": "tsx --test server/*.test.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@colyseus/core": "0.18.11",
+    "@colyseus/sdk": "0.18.2",
+    "@colyseus/ws-transport": "0.18.2",
+    "@dimforge/rapier3d-compat": "^0.20.0",
+    "convex": "1.45.0",
+    "express": "5.2.1",
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "^4.5.0",
+    "@gltf-transform/extensions": "^4.5.0",
+    "@gltf-transform/functions": "^4.5.0",
+    "@types/express": "5.0.6",
+    "@types/node": "26.4.1",
+    "@types/three": "^0.185.4",
+    "meshoptimizer": "^1.2.0",
+    "sharp": "^0.35.4",
+    "tsx": "4.23.13",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2"
+  },
+  "type": "module",
+  "private": true
+}

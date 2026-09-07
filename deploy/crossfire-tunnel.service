@@ -1,0 +1,20 @@
+[Unit]
+Description=Crossfire public playtest tunnel and Convex discovery
+After=network-online.target crossfire-circuit.service
+Wants=network-online.target crossfire-circuit.service
+[Service]
+User=crossfire
+Group=crossfire
+WorkingDirectory=/opt/crossfire-circuit/current
+EnvironmentFile=/etc/crossfire-circuit.env
+ExecStart=/usr/bin/node --import tsx server/tunnel.ts
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+MemoryMax=180M
+TasksMax=128
+[Install]
+WantedBy=multi-user.target

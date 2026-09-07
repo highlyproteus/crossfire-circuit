@@ -1,0 +1,13 @@
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.toneMapping=THREE.ACESFilmicToneMapping;document.body.appendChild(renderer.domElement);
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x263543);scene.add(new THREE.HemisphereLight(0xdcefff,0x495664,3));const sun=new THREE.DirectionalLight(0xffead7,3);sun.position.set(3,6,5);scene.add(sun);
+const camera=new THREE.PerspectiveCamera(40,innerWidth/innerHeight,.01,100);const controls=new OrbitControls(camera,renderer.domElement);
+const loader=new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);const asset=new URLSearchParams(location.search).get('asset')||'atv';
+const {scene:model}=await loader.loadAsync(`/models/${asset}.glb`);scene.add(model);model.updateMatrixWorld(true);const bounds=new THREE.Box3().setFromObject(model),center=bounds.getCenter(new THREE.Vector3()),size=bounds.getSize(new THREE.Vector3());
+controls.target.copy(center);camera.position.copy(center).add(new THREE.Vector3(size.length()*.75,size.length()*.35,size.length()*1.25));controls.update();
+(window as any).assetLab={scene,model,camera,controls,renderer,THREE};
+function loop(){controls.update();renderer.render(scene,camera);requestAnimationFrame(loop);}loop();
+addEventListener('resize',()=>{renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();});

@@ -1,0 +1,18 @@
+{
+  "project_name": "sniper",
+  "folder": "20260906_130947_crossfire-model-sniper_01a077e9",
+  "root_task_id": "01a077e9-7fab-706a-9367-4b2ce3bbba82",
+  "created_at": "2026-09-06T13:14:41.991744",
+  "updated_at": "2026-09-06T13:14:41.991779",
+  "tasks": [
+    {
+      "task_id": "01a077e9-7fab-706a-9367-4b2ce3bbba82",
+      "task_type": "image-to-3d",
+      "stage": "generated",
+      "files": [
+        "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_130947_crossfire-model-sniper_01a077e9/model.glb"
+      ],
+      "created_at": "2026-09-06T13:14:41.991776"
+    }
+  ]
+}

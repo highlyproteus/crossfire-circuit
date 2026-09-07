@@ -1,0 +1,218 @@
+### Result
+{
+  "length": 1120.390040141064,
+  "checkpoints": [
+    0.198,
+    0.404,
+    0.5814,
+    0.7284,
+    0.8728,
+    1
+  ],
+  "jumps": [
+    {
+      "index": 0,
+      "speed": 15,
+      "launchedSpeed": 14.075167655944824,
+      "launches": 1,
+      "landing": null,
+      "maxY": 29.92296028137207,
+      "phase": "dead",
+      "position": {
+        "x": -90.55111694335938,
+        "y": 5.560574054718018,
+        "z": 115
+      },
+      "distance": 20.037291349470177
+    },
+    {
+      "index": 0,
+      "speed": 22,
+      "launchedSpeed": 21.007675170898438,
+      "launches": 1,
+      "landing": null,
+      "maxY": 30.500255584716797,
+      "phase": "dead",
+      "position": {
+        "x": -103.26017761230469,
+        "y": 5.71136474609375,
+        "z": 115
+      },
+      "distance": 33.30506814061433
+    },
+    {
+      "index": 0,
+      "speed": 27,
+      "launchedSpeed": 25.981714248657227,
+      "launches": 1,
+      "landing": {
+        "frame": 109,
+        "speed": 24.378273010253906
+      },
+      "maxY": 31.003976821899414,
+      "phase": "racing",
+      "position": {
+        "x": -97.05223846435547,
+        "y": 24.596094131469727,
+        "z": 115
+      },
+      "distance": 27.40827845566141
+    },
+    {
+      "index": 1,
+      "speed": 15,
+      "launchedSpeed": 14.084359169006348,
+      "launches": 1,
+      "landing": null,
+      "maxY": 29.848419189453125,
+      "phase": "dead",
+      "position": {
+        "x": -56.56321716308594,
+        "y": 5.489988327026367,
+        "z": -115
+      },
+      "distance": 19.978323452620657
+    },
+    {
+      "index": 1,
+      "speed": 22,
+      "launchedSpeed": 21.023473739624023,
+      "launches": 1,
+      "landing": null,
+      "maxY": 30.400184631347656,
+      "phase": "dead",
+      "position": {
+        "x": -43.9578857421875,
+        "y": 5.618129253387451,
+        "z": -115
+      },
+      "distance": 33.246100243764815
+    },
+    {
+      "index": 1,
+      "speed": 27,
+      "launchedSpeed": 25.981714248657227,
+      "launches": 1,
+      "landing": {
+        "frame": 109,
+        "speed": 24.323041915893555
+      },
+      "maxY": 31.003978729248047,
+      "phase": "racing",
+      "position": {
+        "x": -50.18520736694336,
+        "y": 24.28000259399414,
+        "z": -115
+      },
+      "distance": 27.349310558811826
+    }
+  ],
+  "ai": {
+    "snapshot": {
+      "role": "driver",
+      "kills": 0,
+      "escaped": 0,
+      "cooldown": 0,
+      "launches": 0,
+      "phase": "racing",
+      "paused": false,
+      "practice": true,
+      "position": {
+        "x": 97.01144409179688,
+        "y": 24.9921932220459,
+        "z": -17.51456069946289
+      },
+      "yaw": 0.031285861289649886,
+      "speed": 6.625065641936713,
+      "grounded": true,
+      "checkpoint": 0,
+      "health": 100,
+      "elapsed": 282.50000000007174,
+      "deaths": 14,
+      "invulnerable": 0,
+      "warning": 0,
+      "shots": 0,
+      "rocketsFired": 0,
+      "sniperHits": 0,
+      "rocketHits": 0,
+      "blockedShots": 0,
+      "completedCheckpoints": []
+    },
+    "milestones": [
+      {
+        "frame": 1176,
+        "death": 1,
+        "t": 0.18947368421052632,
+        "p": {
+          "x": 112.79718017578125,
+          "y": 5.686767578125,
+          "z": 91.8155746459961
+        }
+      },
+      {
+        "frame": 2428,
+        "death": 2,
+        "t": 0.18947368421052632,
+        "p": {
+          "x": 112.79718017578125,
+          "y": 5.686767578125,
+          "z": 91.8155746459961
+        }
+      },
+      {
+        "frame": 3680,
+        "death": 3,
+        "t": 0.18947368421052632,
+        "p": {
+          "x": 112.79718017578125,
+          "y": 5.686767578125,
+          "z": 91.8155746459961
+        }
+      },
+      {
+        "frame": 4932,
+        "death": 4,
+        "t": 0.18947368421052632,
+        "p": {
+          "x": 112.79718017578125,
+          "y": 5.686767578125,
+          "z": 91.8155746459961
+        }
+      },
+      {
+        "frame": 6184,
+        "death": 5,
+        "t": 0.18947368421052632,
+        "p": {
+          "x": 112.79718017578125,
+          "y": 5.686767578125,
+          "z": 91.8155746459961
+        }
+      },
+      {
+        "frame": 7436,
+        "death": 6,
+        "t": 0.18947368421052632,
+        "p": {
+          "x": 112.79718017578125,
+          "y": 5.686767578125,
+          "z": 91.8155746459961
+        }
+      },
+      {
+        "frame": 8688,
+        "death": 7,
+        "t": 0.18947368421052632,
+        "p": {
+          "x": 112.79718017578125,
+          "y": 5.686767578125,
+          "z": 91.8155746459961
+        }
+      }
+    ]
+  }
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => {\nconst d=window.gameDebug,s=d.sim;d.manual(true);const zero={throttle:0,steer:0,brake:false},result={length:d.COURSE_LENGTH,checkpoints:d.checkpoints,jumps:[]};\nfor(const [index,j]of d.jumps.entries())for(const speed of [15,22,27]){\n s.start(true);s.mount();s.checkpoint=index===0?2:4;\n const t=j.lip-20/d.COURSE_LENGTH,f=d.frame(t);s.yaw=f.yaw;s.body.setTranslation({x:f.p.x,y:f.p.y+.97,z:f.p.z},true);s.body.setLinvel({x:f.forward.x*speed,y:0,z:f.forward.z*speed},true);\n let maxY=0,landing=null,launchedSpeed=0;\n for(let i=0;i<240;i++){s.step({throttle:speed*.32/17,steer:0,brake:false});maxY=Math.max(maxY,s.position().y);if(s.launches&&!launchedSpeed)launchedSpeed=s.speed;if(s.launches&&s.grounded&&((d.closest(s.position()).t-j.lip)*d.COURSE_LENGTH)>j.gap){landing={frame:i,speed:s.speed};break;}if(s.phase===\'dead\')break;}\n result.jumps.push({index,speed,launchedSpeed,launches:s.launches,landing,maxY,phase:s.phase,position:s.position(),distance:(d.closest(s.position()).t-j.lip)*d.COURSE_LENGTH});\n}\ns.start(true);s.mount();const milestones=[];let prev=0,deaths=0;\nfor(let i=0;i<18000&&s.phase!==\'finished\';i++){s.step(d.driveAI(s));if(s.checkpoint!==prev){prev=s.checkpoint;milestones.push({frame:i,checkpoint:prev,deaths:s.deaths});}if(s.deaths!==deaths){deaths=s.deaths;if(deaths<8)milestones.push({frame:i,death:deaths,t:d.closest(s.position()).t,p:s.position()});}}\nresult.ai={snapshot:s.snapshot(),milestones};s.start(true);s.mount();d.advance(60,zero);return result;\n}\n');
+```

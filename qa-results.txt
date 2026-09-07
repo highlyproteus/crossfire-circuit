@@ -1,0 +1,208 @@
+### Result
+{
+  "practiceLap": {
+    "state": {
+      "phase": "finished",
+      "paused": false,
+      "practice": true,
+      "position": {
+        "x": 99.23619842529297,
+        "y": 24.660741806030273,
+        "z": -5.004450798034668
+      },
+      "yaw": -6.045354052236628,
+      "speed": 24.205599560630837,
+      "grounded": true,
+      "checkpoint": 4,
+      "health": 100,
+      "elapsed": 26.59999999999977,
+      "deaths": 0,
+      "invulnerable": 0,
+      "warning": 0,
+      "shots": 0,
+      "rocketsFired": 0,
+      "sniperHits": 0,
+      "rocketHits": 0,
+      "blockedShots": 0,
+      "completedCheckpoints": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "airborne": 30
+  },
+  "fall": {
+    "deaths": 1,
+    "phase": "dead",
+    "savedCheckpoint": 1
+  },
+  "respawn": {
+    "phase": "racing",
+    "paused": false,
+    "practice": true,
+    "position": {
+      "x": -18.467052459716797,
+      "y": 24.42841339111328,
+      "z": 73.95060729980469
+    },
+    "yaw": -1.6496386895116204,
+    "speed": 0,
+    "grounded": true,
+    "checkpoint": 1,
+    "health": 100,
+    "elapsed": 9.366666666666712,
+    "deaths": 1,
+    "invulnerable": 2.916666666666667,
+    "warning": 0,
+    "shots": 0,
+    "rocketsFired": 0,
+    "sniperHits": 0,
+    "rocketHits": 0,
+    "blockedShots": 0,
+    "completedCheckpoints": [
+      1
+    ]
+  },
+  "blast": {
+    "health": 46.877125734051965,
+    "velocity": {
+      "x": 10.095749855041504,
+      "y": 5.580913543701172,
+      "z": 0
+    },
+    "hits": 1
+  },
+  "lethal": {
+    "phase": "dead",
+    "deaths": 2
+  },
+  "pause": {
+    "before": {
+      "phase": "racing",
+      "paused": false,
+      "practice": true,
+      "position": {
+        "x": -18.467052459716797,
+        "y": 24.42841339111328,
+        "z": 73.95060729980469
+      },
+      "yaw": -1.6496386895116204,
+      "speed": 0,
+      "grounded": true,
+      "checkpoint": 1,
+      "health": 100,
+      "elapsed": 9.450000000000049,
+      "deaths": 2,
+      "invulnerable": 2.916666666666667,
+      "warning": 0,
+      "shots": 0,
+      "rocketsFired": 0,
+      "sniperHits": 0,
+      "rocketHits": 1,
+      "blockedShots": 0,
+      "completedCheckpoints": [
+        1
+      ]
+    },
+    "after": {
+      "phase": "racing",
+      "paused": true,
+      "practice": true,
+      "position": {
+        "x": -18.467052459716797,
+        "y": 24.42841339111328,
+        "z": 73.95060729980469
+      },
+      "yaw": -1.6496386895116204,
+      "speed": 0,
+      "grounded": true,
+      "checkpoint": 1,
+      "health": 100,
+      "elapsed": 9.450000000000049,
+      "deaths": 2,
+      "invulnerable": 2.916666666666667,
+      "warning": 0,
+      "shots": 0,
+      "rocketsFired": 0,
+      "sniperHits": 0,
+      "rocketHits": 1,
+      "blockedShots": 0,
+      "completedCheckpoints": [
+        1
+      ]
+    }
+  },
+  "sightlines": {
+    "coverBlocked": true,
+    "openClear": true
+  },
+  "stationaryAttacks": {
+    "phase": "racing",
+    "paused": false,
+    "practice": false,
+    "position": {
+      "x": 99.08277130126953,
+      "y": 25.990785598754883,
+      "z": 27.355560302734375
+    },
+    "yaw": -0.07842456146293124,
+    "speed": 0.08329331473417653,
+    "grounded": true,
+    "checkpoint": 0,
+    "health": 19.180575786226704,
+    "elapsed": 24.99999999999986,
+    "deaths": 0,
+    "invulnerable": 0,
+    "warning": 0,
+    "shots": 2,
+    "rocketsFired": 2,
+    "sniperHits": 1,
+    "rocketHits": 1,
+    "blockedShots": 0,
+    "completedCheckpoints": []
+  },
+  "liveLap": {
+    "state": {
+      "phase": "finished",
+      "paused": false,
+      "practice": false,
+      "position": {
+        "x": 99.23619842529297,
+        "y": 24.660741806030273,
+        "z": -5.004450798034668
+      },
+      "yaw": -6.045354052236628,
+      "speed": 24.205599560630837,
+      "grounded": true,
+      "checkpoint": 4,
+      "health": 66,
+      "elapsed": 26.59999999999977,
+      "deaths": 0,
+      "invulnerable": 0,
+      "warning": 0,
+      "shots": 2,
+      "rocketsFired": 2,
+      "sniperHits": 1,
+      "rocketHits": 0,
+      "blockedShots": 0,
+      "completedCheckpoints": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "airborne": 30
+  },
+  "metrics": {
+    "fps": 59.996746400865554,
+    "drawCalls": 211,
+    "triangles": 179188
+  }
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => {\n  const d=window.gameDebug,s=d.sim;\n  d.manual(true);\n  const zero={throttle:0,steer:0,brake:false};\n  function drive(limit=7000,stopCheckpoint=4){\n    let airborne=0;\n    for(let i=0;i<limit&&s.phase!=="finished"&&s.checkpoint<stopCheckpoint;i++){\n      const p=s.position();let best=Infinity,t=0;\n      for(let j=0;j<240;j++){const c=d.center(j/240),dist=Math.hypot(c.x-p.x,c.z-p.z);if(dist<best){best=dist;t=j/240;}}\n      const f=d.frame(t+.014),target=Math.atan2(f.p.x-p.x,f.p.z-p.z);\n      const diff=Math.atan2(Math.sin(target-s.yaw),Math.cos(target-s.yaw));\n      s.step({throttle:t>.4&&t<.47?1:.64,steer:Math.max(-1,Math.min(1,-diff*1.4)),brake:false});\n      if(!s.grounded)airborne++;\n    }\n    return {state:s.snapshot(),airborne};\n  }\n  const results={};\n  s.start(true);s.mount();results.practiceLap=drive();\n  s.start(true);s.mount();drive(1500,1);\n  const saved=s.checkpoint;\n  for(let i=0;i<1000&&s.deaths===0;i++)s.step({throttle:1,steer:1,brake:false});\n  results.fall={deaths:s.deaths,phase:s.phase,savedCheckpoint:saved};\n  for(let i=0;i<80;i++)s.step(zero);\n  results.respawn=s.snapshot();\n  s.invulnerable=0;const p=s.position();s.explode({x:p.x-2,y:p.y+.2,z:p.z});\n  results.blast={health:s.health,velocity:s.body.linvel(),hits:s.rocketHits};\n  s.hit(110,"QA lethal hit");results.lethal={phase:s.phase,deaths:s.deaths};\n  for(let i=0;i<80;i++)s.step(zero);\n  const before=s.snapshot();s.paused=true;for(let i=0;i<120;i++)s.step({throttle:1,steer:1,brake:false});\n  results.pause={before,after:s.snapshot()};s.paused=false;\n  const cover=d.center(.084),open=d.center(.2);\n  results.sightlines={coverBlocked:!s.lineClear(s.source,{x:cover.x,y:cover.y+1,z:cover.z}),openClear:s.lineClear(s.source,{x:open.x,y:open.y+1,z:open.z})};\n  s.start(false);s.mount();for(let i=0;i<1500;i++)s.step(zero);results.stationaryAttacks=s.snapshot();\n  s.start(false);s.mount();results.liveLap=drive();\n  s.start(true);s.mount();d.advance(60,zero);d.manual(false);\n  results.metrics=d.metrics();\n  return results;\n}\n');
+```

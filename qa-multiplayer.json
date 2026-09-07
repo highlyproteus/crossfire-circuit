@@ -1,0 +1,92 @@
+{
+  "date": "2026-09-06",
+  "url": "https://crossfire-circuit.vercel.app/",
+  "publicLoad": {
+    "endpoint": "https://smithsonian-rand-chronicles-remainder.trycloudflare.com",
+    "players": 26,
+    "stages": [
+      "lobby",
+      "warmup",
+      "countdown",
+      "racing"
+    ],
+    "frames": 1172,
+    "maxGap": 278,
+    "marksmen": 1,
+    "errors": [],
+    "tickRate": 60.103276051807335,
+    "room": "QRWYzIfwq",
+    "uniquePlayers": 26,
+    "clientViews": 26
+  },
+  "browser": {
+    "driving": {
+      "before": {
+        "x": 210.60000610351562,
+        "y": 25.045856475830078,
+        "z": -132.4344940185547
+      },
+      "after": {
+        "x": 210.60000610351562,
+        "y": 24.987808227539062,
+        "z": -96.58496856689453
+      },
+      "speed": 35.84830856323242,
+      "fps": 60.00130490585418,
+      "remaining": 27.733333333333462,
+      "paused": false
+    },
+    "clients": [
+      {
+        "id": "-EXDaBnyN",
+        "stage": "racing",
+        "mark": "-EXDaBnyN",
+        "role": "marksman",
+        "players": 3,
+        "error": ""
+      },
+      {
+        "id": "P9m-M5jF5",
+        "stage": "racing",
+        "mark": "-EXDaBnyN",
+        "role": "driver",
+        "players": 3,
+        "error": ""
+      },
+      {
+        "id": "bYie1OhMt",
+        "stage": "racing",
+        "mark": "-EXDaBnyN",
+        "role": "driver",
+        "players": 3,
+        "error": ""
+      }
+    ]
+  },
+  "combat": {
+    "before": {
+      "x": 0,
+      "y": 35.33010559082031,
+      "z": 0
+    },
+    "moved": {
+      "x": 0,
+      "y": 35.325993347167966,
+      "z": -2.271559476852417
+    },
+    "ads": true,
+    "shot": {
+      "ammo": 3,
+      "target": 35
+    },
+    "reloading": true,
+    "refill": 4
+  },
+  "serverTests": "passed",
+  "convexResults": "EC2 completed round with 26 players persisted; unauthorized write rejected",
+  "limits": [
+    "26 automated clients, not 26 human players",
+    "Cloudflare Quick Tunnel is temporary playtest transport",
+    "No client prediction or hit rewind yet"
+  ]
+}

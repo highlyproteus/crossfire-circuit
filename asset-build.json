@@ -1,0 +1,30 @@
+[
+  {
+    "id": "rider",
+    "source": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_130945_crossfire-model-rider_01a077e9/rigged.glb",
+    "input": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_130945_crossfire-model-rider_01a077e9/rigged.glb",
+    "output": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/crossfire-circuit/public/models/rider.glb",
+    "bytes": 601052
+  },
+  {
+    "id": "atv",
+    "source": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_130946_crossfire-model-atv_01a077e9/model.glb",
+    "input": "/Users/xtox/Documents/Codex/2026-09-06/do/work/prepared/atv.glb",
+    "output": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/crossfire-circuit/public/models/atv.glb",
+    "bytes": 1112212
+  },
+  {
+    "id": "sniper",
+    "source": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_130947_crossfire-model-sniper_01a077e9/model.glb",
+    "input": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_130947_crossfire-model-sniper_01a077e9/model.glb",
+    "output": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/crossfire-circuit/public/models/sniper.glb",
+    "bytes": 500960
+  },
+  {
+    "id": "rocket-launcher",
+    "source": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_130948_crossfire-model-rocket-launche_01a077e9/model.glb",
+    "input": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_130948_crossfire-model-rocket-launche_01a077e9/model.glb",
+    "output": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/crossfire-circuit/public/models/rocket-launcher.glb",
+    "bytes": 577208
+  }
+]

@@ -1,0 +1,99 @@
+{
+  "title": "Crossfire Circuit concepts",
+  "endpoint": "/openapi/v1/text-to-image",
+  "authorized_credits": 54,
+  "balance_before": 1541,
+  "images": [
+    {
+      "name": "Arena",
+      "payload": {
+        "ai_model": "nano-banana-pro",
+        "prompt": "Original industrial sci-fi arcade vehicle arena game, stylized believable hard-surface game art, large readable shapes, bone-white painted panels and dark graphite chassis, safety-orange accents, restrained cyan lighting, consistent scale, crisp edges, modest material wear, clean functional silhouettes. Original designs; no existing franchise logos or recognizable franchise equipment. No text, no watermarks. Asset references use an even neutral studio background, soft grounded shadows, full uncropped subject, and minimal perspective distortion.\n\nWide elevated three-quarter concept of an entire floating ATV race arena above a bottomless midnight-blue void. A continuous broad winding track circles a separate raised central marksman platform; clear empty space between the platform and the circuit. Mostly unguarded track edges. Four cyan checkpoint arches, a safe starting apron, banked bends, one short jump with a visible landing, alternating chunky cover walls that interrupt sightlines from the center, and a narrow exposed finish stretch. Orange ATVs provide scale. Track approximately three ATV widths on broad sections, narrowing to one and a half at the final stretch. Central marksman is visible as a small figure. Show traversable continuity and the central firing relationship clearly. Bone-white decking, dark underslung beams, orange hazard markings; dramatic but readable lighting, no terrain or ground beneath the course. No UI or text.",
+        "aspect_ratio": "16:9"
+      },
+      "submission_started": true,
+      "task_id": "01a077d3-d59d-7598-b4ac-836c422a2c6f",
+      "project_dir": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_124606_crossfire-arena_01a077d3",
+      "complete": true,
+      "image_path": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_124606_crossfire-arena_01a077d3/concept.png",
+      "consumed_credits": 9,
+      "bytes": 1296170
+    },
+    {
+      "name": "ATV",
+      "payload": {
+        "ai_model": "nano-banana-pro",
+        "prompt": "Original industrial sci-fi arcade vehicle arena game, stylized believable hard-surface game art, large readable shapes, bone-white painted panels and dark graphite chassis, safety-orange accents, restrained cyan lighting, consistent scale, crisp edges, modest material wear, clean functional silhouettes. Original designs; no existing franchise logos or recognizable franchise equipment. No text, no watermarks. Asset references use an even neutral studio background, soft grounded shadows, full uncropped subject, and minimal perspective distortion.\n\nA single original sporty industrial sci-fi four-wheeled ATV, isolated front-left three-quarter studio view. Exactly four chunky rubber tires, exposed independent suspension, short wheelbase, wide stance, orange armored body panels, charcoal frame, compact saddle seat, handlebars, visible footrests, small cyan headlamps. Agile low center of mass, mechanically plausible wheel clearances and seat position. No mounted weapons, no rider, no enclosed cabin, no extra wheels. Entire vehicle visible on a light neutral background. Clean reference for later 3D modeling with separated wheel forms.",
+        "aspect_ratio": "1:1"
+      },
+      "submission_started": true,
+      "task_id": "01a077d3-d62e-74a4-b12b-361245b5e383",
+      "project_dir": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_124606_crossfire-atv_01a077d3",
+      "complete": true,
+      "image_path": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_124606_crossfire-atv_01a077d3/concept.png",
+      "consumed_credits": 9,
+      "bytes": 1163030
+    },
+    {
+      "name": "Character",
+      "payload": {
+        "ai_model": "nano-banana-pro",
+        "prompt": "Original industrial sci-fi arcade vehicle arena game, stylized believable hard-surface game art, large readable shapes, bone-white painted panels and dark graphite chassis, safety-orange accents, restrained cyan lighting, consistent scale, crisp edges, modest material wear, clean functional silhouettes. Original designs; no existing franchise logos or recognizable franchise equipment. No text, no watermarks. Asset references use an even neutral studio background, soft grounded shadows, full uncropped subject, and minimal perspective distortion.\n\nOne original full-body futuristic motorsport arena competitor, neutral symmetrical A-pose with open relaxed hands, front three-quarter view with minimal perspective distortion. Lightweight graphite protective riding suit, bone-white shoulder and shin plates, orange chest harness, compact closed helmet with a narrow cyan visor, padded gloves and articulated boots. Athletic normal human proportions, clear joints, no oversized shoulder armor, no cape, no backpack, no weapons. Visually belongs with the orange industrial ATV. Entire head, hands, and feet visible against a neutral light studio backdrop. Suitable for later rigging and seated riding.",
+        "aspect_ratio": "3:4"
+      },
+      "submission_started": true,
+      "task_id": "01a077d3-d6cd-726b-94f8-8782ec1629fa",
+      "project_dir": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_124606_crossfire-character_01a077d3",
+      "complete": true,
+      "image_path": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_124606_crossfire-character_01a077d3/concept.png",
+      "consumed_credits": 9,
+      "bytes": 1172370
+    },
+    {
+      "name": "Sniper rifle",
+      "payload": {
+        "ai_model": "nano-banana-pro",
+        "prompt": "Original industrial sci-fi arcade vehicle arena game, stylized believable hard-surface game art, large readable shapes, bone-white painted panels and dark graphite chassis, safety-orange accents, restrained cyan lighting, consistent scale, crisp edges, modest material wear, clean functional silhouettes. Original designs; no existing franchise logos or recognizable franchise equipment. No text, no watermarks. Asset references use an even neutral studio background, soft grounded shadows, full uncropped subject, and minimal perspective distortion.\n\nOne original fictional sci-fi precision rifle game prop isolated on a light studio background, near side view with slight three-quarter depth. Long slender barrel shroud, compact rectangular optic with cyan glass, angular bone-white receiver, graphite grip and shoulder stock, small orange identification panel. Readable long-range silhouette clearly distinct from a heavy launcher. Stylized exterior only, no cutaway or internal mechanism diagram, no hands or character, no lettering. Full uncropped prop.",
+        "aspect_ratio": "1:1"
+      },
+      "submission_started": true,
+      "task_id": "01a077d3-d75c-71d2-b512-176949b028ab",
+      "project_dir": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_124607_crossfire-sniper-rifle_01a077d3",
+      "complete": true,
+      "image_path": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_124607_crossfire-sniper-rifle_01a077d3/concept.png",
+      "consumed_credits": 9,
+      "bytes": 643768
+    },
+    {
+      "name": "Rocket launcher",
+      "payload": {
+        "ai_model": "nano-banana-pro",
+        "prompt": "Original industrial sci-fi arcade vehicle arena game, stylized believable hard-surface game art, large readable shapes, bone-white painted panels and dark graphite chassis, safety-orange accents, restrained cyan lighting, consistent scale, crisp edges, modest material wear, clean functional silhouettes. Original designs; no existing franchise logos or recognizable franchise equipment. No text, no watermarks. Asset references use an even neutral studio background, soft grounded shadows, full uncropped subject, and minimal perspective distortion.\n\nOne original fictional sci-fi shoulder rocket launcher game prop isolated on a light studio background, near side view with slight three-quarter depth. Short broad single launch tube, oversized dark circular opening, bone-white outer shell, orange safety panels, graphite rear housing, side carry handle and compact sight. Clearly heavier and bulkier than the precision rifle, clean readable silhouette, restrained cyan status light. Stylized exterior only, no cutaway or internal mechanism diagram, no hands or character, no lettering. Full uncropped prop.",
+        "aspect_ratio": "1:1"
+      },
+      "submission_started": true,
+      "task_id": "01a077d3-d7eb-73b3-a741-ed6da8fb2f92",
+      "project_dir": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_124607_crossfire-rocket-launcher_01a077d3",
+      "complete": true,
+      "image_path": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_124607_crossfire-rocket-launcher_01a077d3/concept.png",
+      "consumed_credits": 9,
+      "bytes": 1093657
+    },
+    {
+      "name": "Course kit",
+      "payload": {
+        "ai_model": "nano-banana-pro",
+        "prompt": "Original industrial sci-fi arcade vehicle arena game, stylized believable hard-surface game art, large readable shapes, bone-white painted panels and dark graphite chassis, safety-orange accents, restrained cyan lighting, consistent scale, crisp edges, modest material wear, clean functional silhouettes. Original designs; no existing franchise logos or recognizable franchise equipment. No text, no watermarks. Asset references use an even neutral studio background, soft grounded shadows, full uncropped subject, and minimal perspective distortion.\n\nAn organized isometric environment kit concept sheet on a neutral dark-blue backdrop showing six separated modular components at consistent scale: a broad straight floating deck, a banked quarter-turn, a short takeoff ramp paired with a landing deck, a chunky freestanding cover wall, a checkpoint arch on a safe apron, and a raised central marksman platform with a low parapet. Matching bone-white deck slabs, graphite exposed support beams, orange hazard striping, cyan checkpoint lights. Clean mating edges and mostly open track edges. Large simple collision-friendly shapes. Clearly separated pieces without labels or typography. Buildable game environment design, not a dense cinematic diorama.",
+        "aspect_ratio": "16:9"
+      },
+      "submission_started": true,
+      "task_id": "01a077d3-d886-76e8-9cf1-28ba5ccd43bf",
+      "project_dir": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_124607_crossfire-course-kit_01a077d3",
+      "complete": true,
+      "image_path": "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_124607_crossfire-course-kit_01a077d3/concept.png",
+      "consumed_credits": 9,
+      "bytes": 1334123
+    }
+  ],
+  "balance_after": 1467
+}

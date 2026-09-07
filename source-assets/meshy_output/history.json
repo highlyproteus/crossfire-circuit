@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "projects": [
+    {
+      "folder": "20260906_124606_crossfire-arena_01a077d3",
+      "prompt": "Arena",
+      "task_type": "text-to-image",
+      "root_task_id": "01a077d3-d59d-7598-b4ac-836c422a2c6f",
+      "created_at": "2026-09-06T12:47:15.440886",
+      "updated_at": "2026-09-06T12:47:15.440921",
+      "task_count": 1
+    },
+    {
+      "folder": "20260906_124606_crossfire-atv_01a077d3",
+      "prompt": "ATV",
+      "task_type": "text-to-image",
+      "root_task_id": "01a077d3-d62e-74a4-b12b-361245b5e383",
+      "created_at": "2026-09-06T12:47:16.387630",
+      "updated_at": "2026-09-06T12:47:16.387667",
+      "task_count": 1
+    },
+    {
+      "folder": "20260906_124606_crossfire-character_01a077d3",
+      "prompt": "Character",
+      "task_type": "text-to-image",
+      "root_task_id": "01a077d3-d6cd-726b-94f8-8782ec1629fa",
+      "created_at": "2026-09-06T12:47:16.976467",
+      "updated_at": "2026-09-06T12:47:16.976498",
+      "task_count": 1
+    },
+    {
+      "folder": "20260906_124607_crossfire-sniper-rifle_01a077d3",
+      "prompt": "Sniper rifle",
+      "task_type": "text-to-image",
+      "root_task_id": "01a077d3-d75c-71d2-b512-176949b028ab",
+      "created_at": "2026-09-06T12:47:17.596227",
+      "updated_at": "2026-09-06T12:47:17.596249",
+      "task_count": 1
+    },
+    {
+      "folder": "20260906_124607_crossfire-rocket-launcher_01a077d3",
+      "prompt": "Rocket launcher",
+      "task_type": "text-to-image",
+      "root_task_id": "01a077d3-d7eb-73b3-a741-ed6da8fb2f92",
+      "created_at": "2026-09-06T12:47:18.286678",
+      "updated_at": "2026-09-06T12:47:18.286706",
+      "task_count": 1
+    },
+    {
+      "folder": "20260906_124607_crossfire-course-kit_01a077d3",
+      "prompt": "Course kit",
+      "task_type": "text-to-image",
+      "root_task_id": "01a077d3-d886-76e8-9cf1-28ba5ccd43bf",
+      "created_at": "2026-09-06T12:47:19.009802",
+      "updated_at": "2026-09-06T12:47:19.009824",
+      "task_count": 1
+    },
+    {
+      "folder": "20260906_130945_crossfire-model-rider_01a077e9",
+      "prompt": "rider",
+      "task_type": "image-to-3d",
+      "root_task_id": "01a077e9-765d-71fe-ad83-73f62bcf063c",
+      "created_at": "2026-09-06T13:13:12.970938",
+      "updated_at": "2026-09-06T13:14:44.444111",
+      "task_count": 2
+    },
+    {
+      "folder": "20260906_130946_crossfire-model-atv_01a077e9",
+      "prompt": "atv",
+      "task_type": "image-to-3d",
+      "root_task_id": "01a077e9-7b81-74db-a4b0-d948953648b0",
+      "created_at": "2026-09-06T13:14:40.745473",
+      "updated_at": "2026-09-06T13:14:40.745500",
+      "task_count": 1
+    },
+    {
+      "folder": "20260906_130947_crossfire-model-sniper_01a077e9",
+      "prompt": "sniper",
+      "task_type": "image-to-3d",
+      "root_task_id": "01a077e9-7fab-706a-9367-4b2ce3bbba82",
+      "created_at": "2026-09-06T13:14:41.991744",
+      "updated_at": "2026-09-06T13:14:41.991779",
+      "task_count": 1
+    },
+    {
+      "folder": "20260906_130948_crossfire-model-rocket-launche_01a077e9",
+      "prompt": "rocket-launcher",
+      "task_type": "image-to-3d",
+      "root_task_id": "01a077e9-8414-7638-97c5-33253b83564c",
+      "created_at": "2026-09-06T13:14:43.228933",
+      "updated_at": "2026-09-06T13:14:43.228954",
+      "task_count": 1
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+import { test, before, after } from 'node:test';
+import assert from 'node:assert/strict';
+import { Server } from '@colyseus/core';
+import { WebSocketTransport } from '@colyseus/ws-transport';
+import { Client, type Room as ClientRoom } from '@colyseus/sdk';
+import RAPIER from '@dimforge/rapier3d-compat';
+import { ArenaRoom } from './arena-room';
+import { frame } from '../src/course';
+const server=new Server({transport:new WebSocketTransport(),greet:false});
+const endpoint='http://127.0.0.1:2570',clients:ClientRoom[]=[];
+const wait=(n=60)=>new Promise(r=>setTimeout(r,n));
+async function join(name:string,id?:string){const c=new Client(endpoint),r=id?await c.joinById(id,{name}):await c.create('circuit',{name});r.onMessage('world',()=>{});r.onMessage('notice',()=>{});clients.push(r);return r;}
+before(async()=>{await RAPIER.init();server.define('circuit',ArenaRoom);await server.listen(2570,'127.0.0.1');});
+after(async()=>{for(const c of clients)try{await c.leave();}catch{}await server.gracefullyShutdown(false);});
+test('authoritative shared arena, lobby lifecycle, combat, reconnect and capacity',async()=>{
+ const host=await join('Leader'),room=[...ArenaRoom.active][0];await wait(1100);assert.ok(room.snapshot().tick>=60,'Real room clock must run at 60 Hz');room.setTimestep();
+ host.send('start');await wait();assert.equal(room.stage,'lobby');
+ const second=await join('Driver',host.roomId),third=await join('Driver',host.roomId);assert.equal(room.players.size,3);assert.equal(room.players.get(third.sessionId)!.name,'Driver 2');
+ second.send('start');await wait();assert.equal(room.stage,'lobby');
+ host.send('start');await wait();assert.equal(room.stage,'warmup');assert.equal(room.remaining,30);
+ const p=room.players.get(second.sessionId)!,before=p.sim.position();second.send('input',{throttle:99,steer:0,brake:false,yaw:0,ads:false,fire:false,direction:{x:0,y:0,z:-1}});await wait();assert.equal(p.input.throttle,1);
+ for(let i=0;i<15;i++)room.step();assert.ok(p.sim.position().z!==before.z);
+ for(let i=15;i<1801;i++)room.step();assert.equal(room.stage,'countdown');assert.ok(room.locked);
+ await assert.rejects(()=>join('Too late',host.roomId));
+ for(let i=0;i<301;i++)room.step();assert.equal(room.stage,'racing');assert.equal([...room.players.values()].filter(p=>p.sim.role==='marksman').length,1);
+ assert.ok([...room.players.values()].every(p=>p.sim.world===room.arena.world));
+ const mark=room.players.get(room.marksman)!,driver=[...room.players.values()].find(p=>p.sim.role==='driver')!;assert.ok(mark.sim.markEye().y>34);assert.equal(driver.sim.checkpoint,0);
+ const f=frame(.02);driver.sim.body.setTranslation({...f.p,y:25},true);driver.sim.invulnerable=0;room.arena.world.step();
+ mark.sim.explode({x:f.p.x-6,y:24.4,z:f.p.z},true);assert.ok(driver.sim.body.linvel().y>10);assert.ok(Math.abs(driver.sim.body.linvel().x)>20);
+ for(let i=0;i<4;i++){mark.sim.cooldown=0;assert.ok(mark.sim.fireMarksman({x:0,y:1,z:0}));}mark.sim.cooldown=0;assert.equal(mark.sim.fireMarksman({x:0,y:1,z:0}),false);assert.equal(mark.sim.ammo.sniper,0);assert.ok(mark.sim.reloadTime>0);
+ for(let i=0;i<160;i++)room.step();assert.equal(mark.sim.ammo.sniper,4);
+ const original=driver.sim.checkpoint;second.send('input',{throttle:NaN,steer:0,yaw:0,direction:{x:0,y:0,z:-1},checkpoint:8,health:999});await wait();assert.equal(driver.sim.checkpoint,original);assert.ok(driver.sim.health<=100);
+ // A real disconnected transport is allowed to rejoin its original session.
+ const oldLeader=room.leader;const oldClient=clients.find(c=>c.sessionId===oldLeader)!;oldClient.reconnection.minUptime=0;oldClient.connection.close(4010,'reconnect test');await wait(1500);assert.ok(room.players.has(oldLeader));assert.ok(room.players.get(oldLeader)!.connected);assert.notEqual(room.leader,oldLeader);
+ room.remaining=.01;room.step();assert.equal(room.stage,'results');const newHost=clients.find(c=>c.sessionId===room.leader)!;newHost.send('next');await wait();assert.equal(room.stage,'lobby');assert.equal(room.marksman,'');
+ for(const p of room.players.values())assert.ok(p.sim.body.isEnabled());
+ for(let i=room.players.size;i<26;i++)await join('Load '+i,room.roomId);assert.equal(room.players.size,26);await assert.rejects(()=>join('Overflow',room.roomId));
+ newHost.send('start');await wait();const started=performance.now();for(let i=0;i<600;i++)room.step();const duration=performance.now()-started;assert.ok(duration<10000,`600 idle steps took ${duration}ms`);
+ console.log(JSON.stringify({players:room.players.size,sharedWorld:true,lifecycle:'passed',blast:'passed',magazine:4,leaderHandoff:true,capacityRejected:true,activeTenSecondsMs:duration}));
+});

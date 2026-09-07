@@ -1,0 +1,18 @@
+{
+  "project_name": "Arena",
+  "folder": "20260906_124606_crossfire-arena_01a077d3",
+  "root_task_id": "01a077d3-d59d-7598-b4ac-836c422a2c6f",
+  "created_at": "2026-09-06T12:47:15.440886",
+  "updated_at": "2026-09-06T12:47:15.440921",
+  "tasks": [
+    {
+      "task_id": "01a077d3-d59d-7598-b4ac-836c422a2c6f",
+      "task_type": "text-to-image",
+      "stage": "concept",
+      "files": [
+        "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_124606_crossfire-arena_01a077d3/concept.png"
+      ],
+      "created_at": "2026-09-06T12:47:15.440918"
+    }
+  ]
+}

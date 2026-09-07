@@ -1,0 +1,18 @@
+{
+  "project_name": "Character",
+  "folder": "20260906_124606_crossfire-character_01a077d3",
+  "root_task_id": "01a077d3-d6cd-726b-94f8-8782ec1629fa",
+  "created_at": "2026-09-06T12:47:16.976467",
+  "updated_at": "2026-09-06T12:47:16.976498",
+  "tasks": [
+    {
+      "task_id": "01a077d3-d6cd-726b-94f8-8782ec1629fa",
+      "task_type": "text-to-image",
+      "stage": "concept",
+      "files": [
+        "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_124606_crossfire-character_01a077d3/concept.png"
+      ],
+      "created_at": "2026-09-06T12:47:16.976494"
+    }
+  ]
+}

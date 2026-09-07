@@ -1,0 +1,16 @@
+{
+  "id": "01a077d3-d7eb-73b3-a741-ed6da8fb2f92",
+  "type": "text-to-image",
+  "ai_model": "nano-banana-pro",
+  "prompt": "Original industrial sci-fi arcade vehicle arena game, stylized believable hard-surface game art, large readable shapes, bone-white painted panels and dark graphite chassis, safety-orange accents, restrained cyan lighting, consistent scale, crisp edges, modest material wear, clean functional silhouettes. Original designs; no existing franchise logos or recognizable franchise equipment. No text, no watermarks. Asset references use an even neutral studio background, soft grounded shadows, full uncropped subject, and minimal perspective distortion.\n\nOne original fictional sci-fi shoulder rocket launcher game prop isolated on a light studio background, near side view with slight three-quarter depth. Short broad single launch tube, oversized dark circular opening, bone-white outer shell, orange safety panels, graphite rear housing, side carry handle and compact sight. Clearly heavier and bulkier than the precision rifle, clean readable silhouette, restrained cyan status light. Stylized exterior only, no cutaway or internal mechanism diagram, no hands or character, no lettering. Full uncropped prop.",
+  "status": "SUCCEEDED",
+  "progress": 100,
+  "created_at": 1788716767223,
+  "started_at": 1788716767231,
+  "finished_at": 1788716792627,
+  "expires_at": 1788975992627,
+  "image_urls": [
+    "https://assets.meshy.ai/eae914b7-b548-4f76-806c-aad9546e223a/uploads/image_01a077d3-d7eb-73b3-a741-ed6da8fb2f92_0.png?Expires=1788975992&Signature=he2mAiiFmngEdJVdUgww8BTZIMduRn73U3lC~loPq1XQwmL43HCkVDJ5O9yrM-Oy8zllfQ0O-9TGbwE8QHUBr-xXhBu2lnXnMzdmlaTkOAawvZOqplu-ZB7iSTMl9m-Slxyf99kdLa0AVBwMsPsipT~RX4JsMVgwuzSvnpDVHuJWoucT9RUcwH~X5jA2s9MzijSCztlyxl7Yt5SsKL7GqA-eNP9ThsQDQuUrZ6-zdmhvrsfp8J-85siXAqlW9SgBwl6KhnIB1jkw0AyReHcKZ3lox0HKcUEHjVf4JL63gifzSWvL1VkSvxlzg0VAreuCfZdKyedwLlxh7jnsU-1Vow__&Key-Pair-Id=K1VGYTHIYLM9UM"
+  ],
+  "consumed_credits": 9
+}

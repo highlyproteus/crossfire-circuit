@@ -1,0 +1,16 @@
+{
+  "id": "01a077d3-d6cd-726b-94f8-8782ec1629fa",
+  "type": "text-to-image",
+  "ai_model": "nano-banana-pro",
+  "prompt": "Original industrial sci-fi arcade vehicle arena game, stylized believable hard-surface game art, large readable shapes, bone-white painted panels and dark graphite chassis, safety-orange accents, restrained cyan lighting, consistent scale, crisp edges, modest material wear, clean functional silhouettes. Original designs; no existing franchise logos or recognizable franchise equipment. No text, no watermarks. Asset references use an even neutral studio background, soft grounded shadows, full uncropped subject, and minimal perspective distortion.\n\nOne original full-body futuristic motorsport arena competitor, neutral symmetrical A-pose with open relaxed hands, front three-quarter view with minimal perspective distortion. Lightweight graphite protective riding suit, bone-white shoulder and shin plates, orange chest harness, compact closed helmet with a narrow cyan visor, padded gloves and articulated boots. Athletic normal human proportions, clear joints, no oversized shoulder armor, no cape, no backpack, no weapons. Visually belongs with the orange industrial ATV. Entire head, hands, and feet visible against a neutral light studio backdrop. Suitable for later rigging and seated riding.",
+  "status": "SUCCEEDED",
+  "progress": 100,
+  "created_at": 1788716766936,
+  "started_at": 1788716766942,
+  "finished_at": 1788716794228,
+  "expires_at": 1788975994228,
+  "image_urls": [
+    "https://assets.meshy.ai/eae914b7-b548-4f76-806c-aad9546e223a/uploads/image_01a077d3-d6cd-726b-94f8-8782ec1629fa_0.png?Expires=1788975994&Signature=az2DTVgPoDaRR6GUnvsZgwyTuECqeX3EP-EG1VXyBxkzwk1S9DPkfNntpxK7ILTqobLQpU5VlaVu-Vnrc4v9XQy~bIfvfMCUH8iEsUPU2ZkvSTB3xR-uhY9jkRikt0BzlhWnkQplD7lMEBm~3QHwm1wDln1fPznZkNZtsMgFub8H56nWg7w0nWY0WetsMYldB8ooJKbHyvCnZGu1G2rilfgJIHIgur3fnWdYEdI8qqevW382hr-hMIoHMGIzKn7ADdcOaASCFcExmEYzEOxzxQyu8nFU2iDYDWlLAx-EM649KkywH8jeb0KaLJOwr327URYSeoIRMg5tYRafB9J4OA__&Key-Pair-Id=K1VGYTHIYLM9UM"
+  ],
+  "consumed_credits": 9
+}

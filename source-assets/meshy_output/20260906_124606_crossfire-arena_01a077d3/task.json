@@ -1,0 +1,16 @@
+{
+  "id": "01a077d3-d59d-7598-b4ac-836c422a2c6f",
+  "type": "text-to-image",
+  "ai_model": "nano-banana-pro",
+  "prompt": "Original industrial sci-fi arcade vehicle arena game, stylized believable hard-surface game art, large readable shapes, bone-white painted panels and dark graphite chassis, safety-orange accents, restrained cyan lighting, consistent scale, crisp edges, modest material wear, clean functional silhouettes. Original designs; no existing franchise logos or recognizable franchise equipment. No text, no watermarks. Asset references use an even neutral studio background, soft grounded shadows, full uncropped subject, and minimal perspective distortion.\n\nWide elevated three-quarter concept of an entire floating ATV race arena above a bottomless midnight-blue void. A continuous broad winding track circles a separate raised central marksman platform; clear empty space between the platform and the circuit. Mostly unguarded track edges. Four cyan checkpoint arches, a safe starting apron, banked bends, one short jump with a visible landing, alternating chunky cover walls that interrupt sightlines from the center, and a narrow exposed finish stretch. Orange ATVs provide scale. Track approximately three ATV widths on broad sections, narrowing to one and a half at the final stretch. Central marksman is visible as a small figure. Show traversable continuity and the central firing relationship clearly. Bone-white decking, dark underslung beams, orange hazard markings; dramatic but readable lighting, no terrain or ground beneath the course. No UI or text.",
+  "status": "SUCCEEDED",
+  "progress": 100,
+  "created_at": 1788716766628,
+  "started_at": 1788716766631,
+  "finished_at": 1788716818275,
+  "expires_at": 1788976018275,
+  "image_urls": [
+    "https://assets.meshy.ai/eae914b7-b548-4f76-806c-aad9546e223a/uploads/image_01a077d3-d59d-7598-b4ac-836c422a2c6f_0.png?Expires=1788976018&Signature=E4yWXM2IlECmEvjnXLA1NJVsFlcdLkNsEfy38dRU9ALQXdy8lKabHjqI6EHv4OcYaSEv1cnh0c9uEgDcMG7KB7zZ3SltdHJz5wNBZUs0awVIS8WzaP88wGzaJ7yKHMpF~2L4iM0qgEIcyTinZdXZN3rEn889YldixVKM6WJQXzzM4YgCsmYrOy1eKAXasOXXPnFbBjW1fj0N1xmioViYPmsK8XFZbee4ejiMsg~aw-Jkz6uTrM7gerM71PoFPcF0bdg0sd1czSRUeVEwcQhvDY0v~WL7OTlfpG-qDGP7cqI1PTM8l5boW05TB~fjEv9bZrHhu2y~r61G2cBoD9tDXg__&Key-Pair-Id=K1VGYTHIYLM9UM"
+  ],
+  "consumed_credits": 9
+}

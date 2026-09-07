@@ -1,0 +1,160 @@
+{
+  "status": "integrated and verified in Crossfire Circuit",
+  "budget": 125,
+  "generation_total": 120,
+  "rider_rigging_credits": 5,
+  "format": "glb",
+  "images": [
+    {
+      "id": "rider",
+      "name": "Character",
+      "input_image": "concepts/03-character.png",
+      "sha256": "6978f391ffcb50cbe41112fe8e5566457b57c43932bc1830397326a6af8cf9f6",
+      "generation_credits": 30,
+      "parameters": {
+        "ai_model": "meshy-6",
+        "topology": "triangle",
+        "target_polycount": 18000,
+        "should_remesh": true,
+        "should_texture": true,
+        "enable_pbr": true,
+        "hd_texture": false,
+        "image_enhancement": false,
+        "remove_lighting": true,
+        "target_formats": [
+          "glb"
+        ],
+        "pose_mode": "t-pose"
+      },
+      "submission_started": true,
+      "task_id": "01a077e9-765d-71fe-ad83-73f62bcf063c",
+      "project_dir": "meshy_output/20260906_130945_crossfire-model-rider_01a077e9",
+      "downloaded": true,
+      "model_path": "meshy_output/20260906_130945_crossfire-model-rider_01a077e9/model.glb",
+      "consumed_credits": 30,
+      "face_count": null
+    },
+    {
+      "id": "atv",
+      "name": "ATV",
+      "input_image": "concepts/02-atv.png",
+      "sha256": "62dcd9f48b416eabc0362c226208435e9fbd8f32f319cceaf24167746dd8da69",
+      "generation_credits": 30,
+      "parameters": {
+        "ai_model": "meshy-6",
+        "topology": "triangle",
+        "target_polycount": 22000,
+        "should_remesh": true,
+        "should_texture": true,
+        "enable_pbr": true,
+        "hd_texture": false,
+        "image_enhancement": false,
+        "remove_lighting": true,
+        "target_formats": [
+          "glb"
+        ]
+      },
+      "submission_started": true,
+      "task_id": "01a077e9-7b81-74db-a4b0-d948953648b0",
+      "project_dir": "meshy_output/20260906_130946_crossfire-model-atv_01a077e9",
+      "downloaded": true,
+      "model_path": "meshy_output/20260906_130946_crossfire-model-atv_01a077e9/model.glb",
+      "consumed_credits": 30,
+      "face_count": null
+    },
+    {
+      "id": "sniper",
+      "name": "Sniper rifle",
+      "input_image": "concepts/04-sniper-rifle.png",
+      "sha256": "2ae8feeb320346535a52d7a5cc23813fbdc2afe0f8065ec8d81ad8240a64c940",
+      "generation_credits": 30,
+      "parameters": {
+        "ai_model": "meshy-6",
+        "topology": "triangle",
+        "target_polycount": 8000,
+        "should_remesh": true,
+        "should_texture": true,
+        "enable_pbr": true,
+        "hd_texture": false,
+        "image_enhancement": false,
+        "remove_lighting": true,
+        "target_formats": [
+          "glb"
+        ]
+      },
+      "submission_started": true,
+      "task_id": "01a077e9-7fab-706a-9367-4b2ce3bbba82",
+      "project_dir": "meshy_output/20260906_130947_crossfire-model-sniper_01a077e9",
+      "downloaded": true,
+      "model_path": "meshy_output/20260906_130947_crossfire-model-sniper_01a077e9/model.glb",
+      "consumed_credits": 30,
+      "face_count": null
+    },
+    {
+      "id": "rocket-launcher",
+      "name": "Rocket launcher",
+      "input_image": "concepts/05-rocket-launcher.png",
+      "sha256": "39cf1cc9f8c519380444087703898ea1e2df0b7e850b67cef0102ca43b2117be",
+      "generation_credits": 30,
+      "parameters": {
+        "ai_model": "meshy-6",
+        "topology": "triangle",
+        "target_polycount": 8000,
+        "should_remesh": true,
+        "should_texture": true,
+        "enable_pbr": true,
+        "hd_texture": false,
+        "image_enhancement": false,
+        "remove_lighting": true,
+        "target_formats": [
+          "glb"
+        ]
+      },
+      "submission_started": true,
+      "task_id": "01a077e9-8414-7638-97c5-33253b83564c",
+      "project_dir": "meshy_output/20260906_130948_crossfire-model-rocket-launche_01a077e9",
+      "downloaded": true,
+      "model_path": "meshy_output/20260906_130948_crossfire-model-rocket-launche_01a077e9/model.glb",
+      "consumed_credits": 30,
+      "face_count": null
+    }
+  ],
+  "scope": "Generate the approved ATV, rider, and two weapons from the Codex reference images; rig the rider, optimize and integrate into the running game. Build course geometry from the approved kit reference, preserving editable collision geometry.",
+  "rigging": {
+    "submission_started": true,
+    "project_dir": "meshy_output/20260906_130945_crossfire-model-rider_01a077e9",
+    "task_id": "01a077ec-aa10-77a9-8272-1c217aaeb40e",
+    "downloaded": true,
+    "model_path": "meshy_output/20260906_130945_crossfire-model-rider_01a077e9/rigged.glb",
+    "consumed_credits": 5
+  },
+  "actual_credits": 125,
+  "balance_after": 1232,
+  "runtime_models": [
+    {
+      "id": "rider",
+      "bytes": 601052
+    },
+    {
+      "id": "atv",
+      "bytes": 1112212
+    },
+    {
+      "id": "sniper",
+      "bytes": 500960
+    },
+    {
+      "id": "rocket-launcher",
+      "bytes": 577208
+    }
+  ],
+  "runtime_models_total_bytes": 2791432,
+  "player_height": 2.35,
+  "verification": {
+    "build": "passed",
+    "physics_regression": "passed",
+    "keyboard_and_touch_steering": "passed",
+    "glb_loading": "passed",
+    "rider_and_wheel_visual_review": "passed"
+  }
+}

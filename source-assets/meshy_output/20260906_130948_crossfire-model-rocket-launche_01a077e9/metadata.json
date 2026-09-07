@@ -1,0 +1,18 @@
+{
+  "project_name": "rocket-launcher",
+  "folder": "20260906_130948_crossfire-model-rocket-launche_01a077e9",
+  "root_task_id": "01a077e9-8414-7638-97c5-33253b83564c",
+  "created_at": "2026-09-06T13:14:43.228933",
+  "updated_at": "2026-09-06T13:14:43.228954",
+  "tasks": [
+    {
+      "task_id": "01a077e9-8414-7638-97c5-33253b83564c",
+      "task_type": "image-to-3d",
+      "stage": "generated",
+      "files": [
+        "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_130948_crossfire-model-rocket-launche_01a077e9/model.glb"
+      ],
+      "created_at": "2026-09-06T13:14:43.228952"
+    }
+  ]
+}

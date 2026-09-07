@@ -1,0 +1,18 @@
+{
+  "project_name": "atv",
+  "folder": "20260906_130946_crossfire-model-atv_01a077e9",
+  "root_task_id": "01a077e9-7b81-74db-a4b0-d948953648b0",
+  "created_at": "2026-09-06T13:14:40.745473",
+  "updated_at": "2026-09-06T13:14:40.745500",
+  "tasks": [
+    {
+      "task_id": "01a077e9-7b81-74db-a4b0-d948953648b0",
+      "task_type": "image-to-3d",
+      "stage": "generated",
+      "files": [
+        "/Users/xtox/Documents/Codex/2026-09-06/do/outputs/meshy_output/20260906_130946_crossfire-model-atv_01a077e9/model.glb"
+      ],
+      "created_at": "2026-09-06T13:14:40.745498"
+    }
+  ]
+}

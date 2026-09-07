@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.env*
+output/
+.vercel
+work/
+
+# Local browser automation and OS files
+.playwright-cli/
+.DS_Store

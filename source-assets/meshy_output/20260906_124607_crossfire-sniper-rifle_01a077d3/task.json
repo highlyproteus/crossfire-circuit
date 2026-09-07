@@ -1,0 +1,16 @@
+{
+  "id": "01a077d3-d75c-71d2-b512-176949b028ab",
+  "type": "text-to-image",
+  "ai_model": "nano-banana-pro",
+  "prompt": "Original industrial sci-fi arcade vehicle arena game, stylized believable hard-surface game art, large readable shapes, bone-white painted panels and dark graphite chassis, safety-orange accents, restrained cyan lighting, consistent scale, crisp edges, modest material wear, clean functional silhouettes. Original designs; no existing franchise logos or recognizable franchise equipment. No text, no watermarks. Asset references use an even neutral studio background, soft grounded shadows, full uncropped subject, and minimal perspective distortion.\n\nOne original fictional sci-fi precision rifle game prop isolated on a light studio background, near side view with slight three-quarter depth. Long slender barrel shroud, compact rectangular optic with cyan glass, angular bone-white receiver, graphite grip and shoulder stock, small orange identification panel. Readable long-range silhouette clearly distinct from a heavy launcher. Stylized exterior only, no cutaway or internal mechanism diagram, no hands or character, no lettering. Full uncropped prop.",
+  "status": "SUCCEEDED",
+  "progress": 100,
+  "created_at": 1788716767075,
+  "started_at": 1788716767078,
+  "finished_at": 1788716796678,
+  "expires_at": 1788975996678,
+  "image_urls": [
+    "https://assets.meshy.ai/eae914b7-b548-4f76-806c-aad9546e223a/uploads/image_01a077d3-d75c-71d2-b512-176949b028ab_0.png?Expires=1788975996&Signature=GB3BdeSHKuNeUyki1~P7LMW8anoc1MWEJ4ET~6Ec27NMVXZ0FbRbcecpMARniVmjHZl8UenPCtzievfqVNWnGqkrsqCrbriYjafJQRfYFGro5QgImRlrUuO645RFMHkNV8A3akeUeu594Dm5Nymuy2qwNIOX1fFHyKXH5T7lz-XSTBOFtjB8VW~UAdFKyKt2~oIFzDSykCwGcMJGAFggclPX-GIyasERN911cYMOLm1nXAqoQEI1sSPJ00Zj-LfV7C1HMUu0Ei-OIxFP5ZGqj7tSkOrEiHEp5o~km5VePW6hLmG-zuIqsl3o-X9FWrMbmA7Hk9B2SO3NbhjwVVox0w__&Key-Pair-Id=K1VGYTHIYLM9UM"
+  ],
+  "consumed_credits": 9
+}

@@ -1,0 +1,16 @@
+{
+  "id": "01a077d3-d886-76e8-9cf1-28ba5ccd43bf",
+  "type": "text-to-image",
+  "ai_model": "nano-banana-pro",
+  "prompt": "Original industrial sci-fi arcade vehicle arena game, stylized believable hard-surface game art, large readable shapes, bone-white painted panels and dark graphite chassis, safety-orange accents, restrained cyan lighting, consistent scale, crisp edges, modest material wear, clean functional silhouettes. Original designs; no existing franchise logos or recognizable franchise equipment. No text, no watermarks. Asset references use an even neutral studio background, soft grounded shadows, full uncropped subject, and minimal perspective distortion.\n\nAn organized isometric environment kit concept sheet on a neutral dark-blue backdrop showing six separated modular components at consistent scale: a broad straight floating deck, a banked quarter-turn, a short takeoff ramp paired with a landing deck, a chunky freestanding cover wall, a checkpoint arch on a safe apron, and a raised central marksman platform with a low parapet. Matching bone-white deck slabs, graphite exposed support beams, orange hazard striping, cyan checkpoint lights. Clean mating edges and mostly open track edges. Large simple collision-friendly shapes. Clearly separated pieces without labels or typography. Buildable game environment design, not a dense cinematic diorama.",
+  "status": "SUCCEEDED",
+  "progress": 100,
+  "created_at": 1788716767377,
+  "started_at": 1788716767381,
+  "finished_at": 1788716793338,
+  "expires_at": 1788975993338,
+  "image_urls": [
+    "https://assets.meshy.ai/eae914b7-b548-4f76-806c-aad9546e223a/uploads/image_01a077d3-d886-76e8-9cf1-28ba5ccd43bf_0.png?Expires=1788975993&Signature=kuu6gsUhMSi8XK5NsIi90d0iKAKeLjIqyfHZbzftpASagKNwOMIwydsPI9ECboez6ClOm5fwJ87XaBlM7rtGQtyj2fw6JRx2apgKAUVNKM6KXCVQXsWjzcUP6qLiwRn~dghrgqVngfvqKT3pWGNBktOLI8TaAhfie9kGpJV2dB0gAmnR~-3TLdQXE3YGOoB7s~~9aWRipeWXzwR~HvvB82d9VDUJuttfixKUqXcJSG7ivg5bibTfaxbOKCX8cXt-PJOJXSot0zZFTO9YQhKaJZ5W-zS9417CmUCU-HLwjcKlhIdjuXCSpgHcOFegz82z6rMlDQEEa0ZtGI7tXTgDsQ__&Key-Pair-Id=K1VGYTHIYLM9UM"
+  ],
+  "consumed_credits": 9
+}
