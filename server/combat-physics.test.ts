@@ -49,18 +49,18 @@ test('real shared-world fuel impacts detonate at low speed, high speed, sideways
     if(scenario.yaw)driver.body.setLinvel({x:0,y:driver.body.linvel().y,z:scenario.speed},true);
     driver.step({throttle:scenario.yaw?0:1,steer:0,brake:false});arena.updateSharedBarrels(1/60);arena.world.step();
    }
-   assert.equal(barrel.active,false,JSON.stringify(scenario));assert.equal(driver.barrelExplosions,1);assert.ok(driver.health<100);assert.ok(driver.blastTime>0);assert.ok(driver.body.linvel().y>15,'blast must launch the ATV, not just play an effect');
+   assert.equal(barrel.active,false,JSON.stringify(scenario));assert.equal(driver.barrelExplosions,1);assert.equal(driver.health,75);assert.equal(driver.phase,'racing');assert.ok(driver.blastTime>0);assert.ok(driver.body.linvel().y>15,'blast must launch the ATV, not just play an effect');
   }finally{arena.world.free();}
  }
 });
 test('shooting fuel triggers a chain, launches nearby drivers, and fixed cover blocks the blast',()=>{
  const {arena,driver}=shared();try{
   const mark=new Simulation(false,arena.world);mark.start(true,'marksman');mark.barrels=arena.barrels;mark.networkTargets=[driver];
-  const barrels=arena.barrels.filter(b=>b.explosive).slice(0,2);isolate(arena,barrels.map(b=>b.id));const f=frame(.015);
+  const barrels=arena.barrels.filter(b=>b.explosive).slice(0,4);isolate(arena,barrels.map(b=>b.id));const f=frame(.015);
   barrels.forEach((b,i)=>b.body.setTranslation({x:f.p.x+i*4,y:24.81,z:f.p.z},true));
   place(driver,f.p.x,24.97,f.p.z+9);mark.markBody!.setTranslation({x:f.p.x,y:27,z:f.p.z-10},true);arena.world.step();
   const p=barrels[0].body.translation(),e=mark.markEye();assert.ok(mark.fireMarksman({x:p.x-e.x,y:p.y-e.y,z:p.z-e.z}));
-  assert.ok(barrels.every(b=>!b.active));assert.equal(mark.barrelExplosions,2);assert.ok(driver.body.linvel().y>15);assert.ok(Math.hypot(driver.body.linvel().x,driver.body.linvel().z)>20);
+  assert.ok(barrels.every(b=>!b.active));assert.equal(mark.barrelExplosions,4);assert.equal(driver.health,75,'One chain reaction must not stack four health hits');assert.equal(driver.phase,'racing');assert.equal(mark.kills,0);assert.ok(driver.body.linvel().y>15);assert.ok(Math.hypot(driver.body.linvel().x,driver.body.linvel().z)>20);
   driver.phase='racing';driver.health=100;driver.invulnerable=0;place(driver,f.p.x,24.97,f.p.z+9);
   arena.world.createCollider(RAPIER.ColliderDesc.cuboid(6,5,.5).setTranslation(f.p.x,27,f.p.z+4));arena.world.step();
   mark.explode({x:f.p.x,y:24.81,z:f.p.z},true,'barrel');assert.equal(driver.health,100);assert.ok(driver.body.linvel().y<1);
@@ -86,6 +86,26 @@ test('solo marksman AI can hit barrels across its separate physics worlds',()=>{
  const s=new Simulation();try{s.start(true,'marksman');const bot=s.bots[0],barrel=s.barrels.find(b=>b.explosive)!,f=frame(.015);isolate(s,[barrel.id]);
   barrel.body.setTranslation({x:f.p.x,y:24.81,z:f.p.z},true);place(bot,f.p.x,24.97,f.p.z-5,f.yaw,14);bot.invulnerable=0;s.world.step();
   for(let i=0;i<90&&barrel.active;i++)s.step(ZERO);
-  assert.equal(barrel.active,false);assert.ok(bot.blastTime>0);assert.ok(bot.body.linvel().y>15);assert.equal(s.kills,0,'an unassisted barrel collision is not a marksman kill');
+  assert.equal(barrel.active,false);assert.equal(bot.health,75);assert.equal(bot.phase,'racing');assert.ok(bot.blastTime>0);assert.ok(bot.body.linvel().y>15);assert.equal(s.kills,0,'an unassisted barrel collision is not a marksman kill');
  }finally{for(const bot of s.bots)bot.world.free();s.world.free();}
+});
+
+test('barrel blasts take 25 health throughout their radius, respect protection, and four separate hits destroy a driver',()=>{
+ const {arena,driver}=shared();try{
+  isolate(arena);const origin={x:1000,y:100,z:1000};
+  for(const distance of [0,2,9,19,21]){
+   driver.health=100;driver.phase='racing';place(driver,origin.x,origin.y,origin.z+distance);
+   driver.explode(origin,false,'barrel');
+   assert.equal(driver.health,distance<20?75:100,`distance ${distance}`);assert.equal(driver.phase,'racing');
+  }
+  driver.health=100;driver.invulnerable=1;place(driver,origin.x,origin.y,origin.z);
+  driver.explode(origin,false,'barrel');assert.equal(driver.health,100);assert.equal(driver.body.linvel().y,0);
+  driver.invulnerable=0;
+  for(let hit=1;hit<=4;hit++){
+   place(driver,origin.x,origin.y,origin.z);driver.explode(origin,false,'barrel');
+   assert.equal(driver.health,100-hit*25);assert.equal(driver.phase,hit===4?'dead':'racing');
+  }
+  driver.health=100;driver.phase='racing';driver.explode(origin,false,'rocket');
+  assert.equal(driver.health,0,'A direct rocket retains its existing damage');
+ }finally{arena.world.free();}
 });

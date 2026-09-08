@@ -161,6 +161,8 @@ The September 8 migration preserved the deployed game build, verified all seven 
 
 ## Barrel and sniper balance update
 
+Explosive barrels deal a flat 25 damage (25% of maximum driver health) on contact or anywhere inside their unobstructed blast radius. A chain reaction applies this health hit once per driver; separate explosions can still add up to four hits. Knockback, cover, spawn protection and rocket damage keep their existing behavior. Being launched into the void can still kill a driver.
+
 `server/combat-physics.test.ts` covers four-hit body/helmet damage, solo sniper damage, reloads, real fuel impacts (slow, fast, sideways and tipped drums), rifle-triggered chains, blast launch and cover, ten-second tower stability and driving through it, and solo marksman AI barrel impacts. `npm run test:multiplayer` also verifies the lobby, reconnection, shared world and 26-player capacity. The blue tower is on the western straight after the first jump/bypass rejoins.
 
 ## Local project location

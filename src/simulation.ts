@@ -5,6 +5,7 @@ import {driveAI} from './driver-ai';
 
 export const MAGAZINE_SIZE=4;
 export const SNIPER_DAMAGE=25;
+export const BARREL_DAMAGE=25;
 export type Phase = 'menu' | 'staging' | 'racing' | 'dead' | 'finished';
 export type Input = { throttle: number; steer: number; brake: boolean };
 export type Effect = { id: number; type: 'shot' | 'blast' | 'checkpoint' | 'death' | 'boost' | 'barrel' | 'reload' | 'rocket'; at: Vec; to?: Vec; ttl: number; life: number };
@@ -158,11 +159,11 @@ export class Simulation {
     this.health = Math.max(0, this.health - amount);
     if (this.health <= 0) this.die(reason);
   }
-  explode(at:Vec,credit=true,kind:'rocket'|'barrel'='rocket'){
+  explode(at:Vec,credit=true,kind:'rocket'|'barrel'='rocket',barrelVictims=new Set<Simulation>()){
     // Blast occlusion uses fixed cover so the exploding drum cannot absorb its own blast.
     const radius=kind==='barrel'?20:18,strength=(kind==='barrel'?1.15:1)*this.tuning.blast;
     for(const barrel of this.barrels){if(!barrel.active)continue;const p=barrel.body.translation(),dx=p.x-at.x,dz=p.z-at.z,d=Math.hypot(dx,p.y-at.y,dz);if(d>=radius)continue;
-      if(barrel.explosive&&d<7){this.detonateBarrel(barrel,credit);continue;}const power=1-d/radius,n=Math.max(.1,Math.hypot(dx,dz)),mass=barrel.body.mass();barrel.body.applyImpulse({x:dx/n*mass*26*power,y:mass*18*power,z:dz/n*mass*26*power},true);
+      if(barrel.explosive&&d<7){this.detonateBarrel(barrel,credit,barrelVictims);continue;}const power=1-d/radius,n=Math.max(.1,Math.hypot(dx,dz)),mass=barrel.body.mass();barrel.body.applyImpulse({x:dx/n*mass*26*power,y:mass*18*power,z:dz/n*mass*26*power},true);
     }
     this.effect('blast',at,.9);
     for(const target of this.combatTargets){const p=target.position(),dx=p.x-at.x,dz=p.z-at.z,d=Math.hypot(dx,p.y-at.y,dz);if(d>=radius||target.invulnerable>0||target.phase!=='racing'||!this.lineClear(at,p,target.body,true))continue;
@@ -170,8 +171,13 @@ export class Simulation {
       // Give the rigid body launch velocity and suspend tire/suspension forces.
       target.body.applyImpulse({x:nx*mass*38*power*strength,y:mass*(10+15*power)*power*strength,z:nz*mass*38*power*strength},true);
       target.airTime=Math.max(target.airTime,.18+power*.65);target.blastTime=1.6;target.grounded=false;
-      const damage=d<2.3?140:90*power;
-      if(this.role==='marksman'&&credit)this.damageBot(target,damage);else target.hit(damage,kind==='barrel'?'Explosive barrel':'Rocket impact');
+      // A chain keeps its physical blasts, but takes only one quarter of a
+      // driver's maximum health. Separate barrel impacts can still add up.
+      if(kind!=='barrel'||!barrelVictims.has(target)){
+        if(kind==='barrel')barrelVictims.add(target);
+        const damage=kind==='barrel'?BARREL_DAMAGE:d<2.3?140:90*power;
+        if(this.role==='marksman'&&credit)this.damageBot(target,damage);else target.hit(damage,kind==='barrel'?'Explosive barrel':'Rocket impact');
+      }
       if(target.health<=0)target.deathTimer=2.4;
       this.rocketHits++;
     }
@@ -318,7 +324,7 @@ export class Simulation {
       this.world.createCollider(RAPIER.ColliderDesc.cylinder(.8,.68).setMass(spot.explosive?45:spot.stack?18:28).setFriction(spot.stack?.65:.5).setRestitution(spot.stack?.05:.3),body);this.barrels.push({id,body,explosive:spot.explosive,active:true,cooldown:0});
     });
   }
-  private detonateBarrel(barrel:typeof this.barrels[number],credit=true){if(!barrel.active)return;barrel.active=false;const p={...barrel.body.translation()};barrel.body.setEnabled(false);this.barrelExplosions++;this.explode(p,credit,'barrel');}
+  private detonateBarrel(barrel:typeof this.barrels[number],credit=true,barrelVictims=new Set<Simulation>()){if(!barrel.active)return;barrel.active=false;const p={...barrel.body.translation()};barrel.body.setEnabled(false);this.barrelExplosions++;this.explode(p,credit,'barrel',barrelVictims);}
   private barrelContact(target:Simulation){
     if(target.phase!=='racing')return;
     const p=target.position(),vehicle=target.body.collider(0);

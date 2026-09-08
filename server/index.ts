@@ -12,7 +12,7 @@ const server=new Server({transport,greet:false});
 const app=transport.getExpressApp();
 app.disable('x-powered-by');
 app.use((_req,res,next)=>{res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Referrer-Policy','same-origin');next();});
-app.get('/health',(_req,res)=>res.json({ok:true,game:'crossfire-circuit',version:'voice-1',rooms:ArenaRoom.active.size,players:[...ArenaRoom.active].reduce((n,r)=>n+r.players.size,0)}));
+app.get('/health',(_req,res)=>res.json({ok:true,game:'crossfire-circuit',version:'barrel-damage-25',rooms:ArenaRoom.active.size,players:[...ArenaRoom.active].reduce((n,r)=>n+r.players.size,0)}));
 app.use(express.static(path.resolve('dist'),{index:'index.html',maxAge:'1h',setHeaders:(res,file)=>{if(file.endsWith('.html'))res.setHeader('Cache-Control','no-cache');}}));
 server.define('circuit',ArenaRoom);
 if(process.env.TRUST_CLOUDFLARE==='true' && !['127.0.0.1','::1'].includes(process.env.HOST??'127.0.0.1'))throw new Error('The Cloudflare origin must bind to loopback.');
