@@ -114,7 +114,10 @@ node deploy/aws.mjs ssm describe-instance-information
 npx convex run --prod servers:current '{}'
 npx convex run --prod results:recent '{}'
 npm run test:multiplayer
+node --test deploy/aws.test.mjs
 ```
+
+For private-repository Vercel deployments, use your verified Git author identity associated with the hosting team. This project's local Git settings use the authenticated `highlyproteus` repository owner; global Git settings and existing commit history are unchanged.
 
 `VITE_CONVEX_URL` and `VITE_SERVER_DISCOVERY=true` configure the Vercel production build. The obsolete fixed game-server endpoint has been removed from production settings. `CONVEX_URL` and `GAME_SERVER_SECRET` belong only on EC2/Convex. Do not put the latter in Vite variables. Avoid restarting the game service during an active match; in-memory lobbies do not survive server restarts.
 
