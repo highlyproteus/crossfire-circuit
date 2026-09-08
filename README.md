@@ -96,24 +96,29 @@ The client detects stalled sockets, retries against freshly discovered server en
 ## Multiplayer hosting and operation
 
 - **Vercel:** `proteus5/crossfire-circuit`, public frontend at https://crossfire-circuit.vercel.app/.
-- **Colyseus 0.18:** separate `crossfire-circuit.service` on the existing `hive3-standalone` EC2 machine. Runs as the unprivileged `crossfire` user, bound to localhost:2567. Existing Hive3 Discord relay remains a separate service.
+- **Colyseus 0.18:** `crossfire-circuit.service` on a dedicated EC2 instance in **Proteus Labs**. Runs as the unprivileged `crossfire` user, bound to localhost:2567. This game must never share infrastructure with Hive3 or another company. The account and host are recorded in `deploy/production.json`.
 - **Convex:** `highlyproteus/crossfire-circuit`, production `clever-gerbil-617`. Stores completed rounds, fastest completed laps, and the current public server endpoint. Only the game server can write results or register an endpoint, using a server-only secret. Result saves use an idempotent key and a durable disk outbox for retries.
 - **Public playtest transport:** `crossfire-tunnel.service` runs Cloudflare Quick Tunnel and refreshes endpoint discovery in Convex. The frontend discovers the current endpoint on join, so the Vercel invite URL stays stable when the tunnel hostname changes. This is a testing transport, not a production SLA or a permanent named tunnel. A tunnel restart disconnects active sockets; a fresh join obtains the new endpoint.
-- Private SSH remains over Tailscale. No EC2 instance was created and no public SSH rule was added. AWS CLI sessions were expired; a full account-wide instance inventory was not completed.
+- Administration uses AWS Systems Manager in the Proteus account. The dedicated security group has zero inbound rules; the SSH service and socket are disabled. Storage is encrypted, IMDSv2 is required, and service hardening blocks game/tunnel access to instance metadata. The instance has the SSM core role, with temporary migration storage permissions removed after transfer.
 
 The server runs physics at 60 Hz and broadcasts snapshots at 20 Hz. Clients send bounded inputs at 30 Hz and interpolate/extrapolate render poses by at most 80 ms. The server owns movement, collisions, checkpoints, role selection, ammo, damage, round timing, and standings. Client-side prediction and lag-compensated hit rewind are future improvements; latency affects steering and aiming responsiveness.
 
-Deployment units are in `deploy/`. Runtime source lives at `/opt/crossfire-circuit/current` on EC2; server-only environment is `/etc/crossfire-circuit.env`; unsaved match results are `/var/lib/crossfire-circuit/outbox`. Useful commands:
+Deployment units are in `deploy/`. Install `crossfire-hardening.conf` as a systemd drop-in for both game and tunnel units. Runtime source lives at `/opt/crossfire-circuit/current` on EC2; server-only environment is `/etc/crossfire-circuit.env`; unsaved match results are `/var/lib/crossfire-circuit/outbox`. Runtime source and dependencies must be root-owned and readable by the `crossfire` user; keep the environment file root-owned with mode `600`.
+
+The AWS wrapper verifies the Proteus account before issuing a command and rejects profile/region overrides. Renew the `crossfire-proteus` profile through normal browser sign-in when needed. Useful commands:
 
 ```sh
-ssh ubuntu@hive3-standalone 'sudo systemctl status crossfire-circuit crossfire-tunnel'
-ssh ubuntu@hive3-standalone 'sudo journalctl -u crossfire-circuit -n 50 --no-pager'
+node deploy/aws.mjs sts get-caller-identity
+node deploy/aws.mjs ec2 describe-instances --filters Name=tag:Project,Values=crossfire-circuit
+node deploy/aws.mjs ssm describe-instance-information
 npx convex run --prod servers:current '{}'
 npx convex run --prod results:recent '{}'
 npm run test:multiplayer
 ```
 
-`VITE_CONVEX_URL` and `VITE_SERVER_DISCOVERY=true` configure the Vercel production build. `CONVEX_URL` and `GAME_SERVER_SECRET` belong only on EC2/Convex. Do not put the latter in Vite variables. Avoid restarting the game service during an active match; in-memory lobbies do not survive server restarts.
+`VITE_CONVEX_URL` and `VITE_SERVER_DISCOVERY=true` configure the Vercel production build. The obsolete fixed game-server endpoint has been removed from production settings. `CONVEX_URL` and `GAME_SERVER_SECRET` belong only on EC2/Convex. Do not put the latter in Vite variables. Avoid restarting the game service during an active match; in-memory lobbies do not survive server restarts.
+
+The September 8 migration preserved the deployed game build, verified all seven server test groups and a two-client internet test, rotated the game-server secret, and moved endpoint discovery to Proteus. Game services, credentials, runtime directories, service account, and old upload archives were removed from the previous shared host after recovery archives were verified. Its unrelated production relay retained the same process, configuration checksum, and restart count.
 
 ## Source
 
