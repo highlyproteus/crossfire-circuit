@@ -1,0 +1,27 @@
+[Unit]
+Description=Crossfire Circuit permanent Cloudflare connector
+After=network-online.target crossfire-circuit.service
+Wants=network-online.target crossfire-circuit.service
+[Service]
+User=crossfire
+Group=crossfire
+LoadCredential=tunnel-token:/etc/crossfire-circuit/tunnel-token
+ExecStart=/usr/local/bin/cloudflared tunnel --no-autoupdate --protocol http2 --metrics 127.0.0.1:20242 run --token-file %d/tunnel-token
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+CapabilityBoundingSet=
+IPAddressDeny=169.254.169.254/32
+IPAddressDeny=fd00:ec2::254/128
+MemoryMax=180M
+TasksMax=128
+UMask=0077
+[Install]
+WantedBy=multi-user.target

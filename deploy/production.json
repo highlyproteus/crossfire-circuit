@@ -4,5 +4,10 @@
   "awsProfile": "crossfire-proteus",
   "region": "us-east-2",
   "instanceId": "i-0e47f6d8e7d999cd7",
-  "securityGroupId": "sg-03547dba312541f14"
+  "securityGroupId": "sg-03547dba312541f14",
+  "cloudflareAccountId": "dbd7a14f890e83864cb2ce4594533492",
+  "cloudflareZoneId": "35d50f012d845f15854fd12fee3fbe48",
+  "cloudflareTunnelId": "cb9d32ac-333a-4b79-814f-bc5d9210fbd2",
+  "publicSiteOrigin": "https://opencrossfirecircuit.party",
+  "publicGameOrigin": "https://multiplayer.opencrossfirecircuit.party"
 }

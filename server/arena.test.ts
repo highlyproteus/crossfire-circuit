@@ -6,11 +6,13 @@ import { Client, type Room as ClientRoom } from '@colyseus/sdk';
 import RAPIER from '@dimforge/rapier3d-compat';
 import { ArenaRoom } from './arena-room';
 import { frame } from '../src/course';
-const server=new Server({transport:new WebSocketTransport(),greet:false});
+import { installAdmission } from './admission';
+const transport=new WebSocketTransport();
+const server=new Server({transport,greet:false});
 const endpoint='http://127.0.0.1:2570',clients:ClientRoom[]=[];
 const wait=(n=60)=>new Promise(r=>setTimeout(r,n));
 async function join(name:string,id?:string){const c=new Client(endpoint),r=id?await c.joinById(id,{name}):await c.create('circuit',{name});r.onMessage('world',()=>{});r.onMessage('notice',()=>{});clients.push(r);return r;}
-before(async()=>{await RAPIER.init();server.define('circuit',ArenaRoom);await server.listen(2570,'127.0.0.1');});
+before(async()=>{await RAPIER.init();server.define('circuit',ArenaRoom);await server.listen(2570,'127.0.0.1');installAdmission(transport.server!);});
 after(async()=>{for(const c of clients)try{await c.leave();}catch{}await server.gracefullyShutdown(false);});
 test('authoritative shared arena, lobby lifecycle, combat, reconnect and capacity',async()=>{
  const host=await join('Leader'),room=[...ArenaRoom.active][0];await wait(1100);assert.ok(room.snapshot().tick>=60,'Real room clock must run at 60 Hz');room.setTimestep();

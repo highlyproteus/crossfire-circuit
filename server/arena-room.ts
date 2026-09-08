@@ -4,6 +4,7 @@ import { Simulation, type Input } from '../src/simulation';
 import { closest, checkpoints } from '../src/course';
 import type { PlayerInput, PlayerState, RoundPhase, WorldState } from '../src/network-types';
 import { queueResult } from './results';
+import { LOBBY_WAIT_MS, RESULTS_WAIT_MS, LOBBY_EXPIRED_MESSAGE } from '../src/lobby-policy';
 const ZERO:PlayerInput={throttle:0,steer:0,brake:false,yaw:0,ads:false,fire:false,direction:{x:0,y:0,z:-1}};
 type Entry={name:string;sim:Simulation;connected:boolean;input:PlayerInput;lastInput:number;finished:number;serial:number};
 export class ArenaRoom extends Room {
@@ -14,9 +15,12 @@ export class ArenaRoom extends Room {
   leader='';stage:RoundPhase='lobby';remaining=0;elapsed=0;round=0;reason='';marksman='';
   private departed=new Map<string,PlayerState>();private instanceId=randomUUID();private accumulator=0;private tick=0;private serial=0;private age=0;
   static active=new Set<ArenaRoom>();
+  private waitingSince=0;private expiryWarned=false;private expiring=false;
+  protected now(){return Date.now();}
+  private resetWait(){this.waitingSince=this.now();this.expiryWarned=false;}
   onCreate(){
     if(ArenaRoom.active.size>=4)throw new ServerError(503,'All circuits are busy. Try again shortly.');
-    ArenaRoom.active.add(this);this.setPrivate(true);
+    ArenaRoom.active.add(this);this.setPrivate(true);this.resetWait();
     this.arena=new Simulation();this.arena.start(true);this.arena.body.setEnabled(false);this.arena.externalStep=true;
     this.onMessage('input',(client,data:unknown)=>{const p=this.players.get(client.sessionId);if(!p||!p.connected||!data||typeof data!=='object')return;const d=data as Record<string,unknown>,vec=d.direction as Record<string,unknown>|undefined;
       const finite=(v:unknown)=>typeof v==='number'&&Number.isFinite(v);
@@ -25,7 +29,7 @@ export class ArenaRoom extends Room {
       p.input={throttle:Math.max(-1,Math.min(1,d.throttle as number)),steer:Math.max(-1,Math.min(1,d.steer as number)),brake:d.brake===true,yaw:(d.yaw as number)%(Math.PI*2),ads:d.ads===true,fire:d.fire===true,direction:{x:(vec.x as number)/n,y:(vec.y as number)/n,z:(vec.z as number)/n}};p.lastInput=this.age;
     });
     this.onMessage('start',c=>{if(c.sessionId!==this.leader||this.stage!=='lobby')return;if(this.connected().length<2){c.send('notice','Invite at least one other player to start.');return;}this.round++;this.resetPlayers();this.stage='warmup';this.remaining=30;this.reason='Free play — explore the circuit';this.publish();});
-    this.onMessage('next',c=>{if(c.sessionId!==this.leader||this.stage!=='results')return;this.stage='lobby';this.remaining=0;this.marksman='';this.resetPlayers();void this.unlock();this.publish();});
+    this.onMessage('next',c=>{if(c.sessionId!==this.leader||this.stage!=='results')return;this.stage='lobby';this.remaining=0;this.marksman='';this.resetWait();this.resetPlayers();void this.unlock();this.publish();});
     this.onMessage('weapon',(c,w)=>{const s=this.players.get(c.sessionId)?.sim;if(s?.role==='marksman'&&s.reloadTime<=0&&(w==='sniper'||w==='rocket'))s.attackType=w;});
     this.onMessage('reload',c=>this.players.get(c.sessionId)?.sim.requestReload());
     this.onMessage('recover',c=>{if(this.stage==='racing'||this.stage==='warmup')this.players.get(c.sessionId)?.sim.recover();});
@@ -34,7 +38,7 @@ export class ArenaRoom extends Room {
     // Disable schema patches after installing our loop, avoiding a second clock tick.
     this.patchRate=null;
   }
-  onAuth(_client:Client,options:{name?:unknown}){const name=typeof options?.name==='string'?options.name.normalize('NFKC').replace(/[<>\p{C}]/gu,'').trim().replace(/\s+/g,' ').slice(0,18):'';if(name.length<2)throw new ServerError(400,'Enter a name with 2–18 characters.');return name;}
+  static async onAuth(_token:string,options:{name?:unknown}){const name=typeof options?.name==='string'?options.name.normalize('NFKC').replace(/[<>\p{C}]/gu,'').trim().replace(/\s+/g,' ').slice(0,18):'';if(name.length<2)throw new ServerError(400,'Enter a name with 2–18 characters.');return name;}
   onJoin(client:Client,_options:unknown,name:string){
     if(this.stage!=='lobby'&&this.stage!=='warmup')throw new ServerError(409,'This race has started. Join the next lobby.');
     let unique=name;let count=2;while([...this.players.values()].some(p=>p.name===unique))unique=`${name.slice(0,14)} ${count++}`;
@@ -59,9 +63,15 @@ export class ArenaRoom extends Room {
     this.resetPlayers();this.marksman=candidates[randomInt(candidates.length)][0];const s=this.players.get(this.marksman)!.sim;s.start(true,'marksman');s.barrels=this.arena.barrels;this.refreshTargets();
     this.stage='racing';this.remaining=600;this.reason='Race through all eight checkpoints';this.elapsed=0;this.publish();
   }
-  private end(reason:string){if(this.stage==='results')return;const wasRacing=this.stage==='racing';this.stage='results';this.remaining=0;this.reason=reason;for(const p of this.players.values())p.input={...ZERO};this.publish();if(wasRacing){const state=this.snapshot();state.players.push(...this.departed.values());void queueResult(this.instanceId+'-'+this.round,state);}}
+  private end(reason:string){if(this.stage==='results')return;const wasRacing=this.stage==='racing';this.stage='results';this.resetWait();this.remaining=0;this.reason=reason;for(const p of this.players.values())p.input={...ZERO};this.publish();if(wasRacing){const state=this.snapshot();state.players.push(...this.departed.values());void queueResult(this.instanceId+'-'+this.round,state);}}
   step(){
+    if(this.expiring)return;
     const dt=1/60;this.age+=dt;this.tick++;
+    if(this.tick%60===0&&(this.stage==='lobby'||this.stage==='results')){
+      const remaining=(this.stage==='lobby'?LOBBY_WAIT_MS:RESULTS_WAIT_MS)-(this.now()-this.waitingSince);
+      if(remaining<=0){this.expiring=true;this.broadcast('lobby-expired',LOBBY_EXPIRED_MESSAGE);void this.disconnect();return;}
+      if(remaining<=60_000&&!this.expiryWarned){this.expiryWarned=true;this.broadcast('notice',this.stage==='lobby'?'Start a round within one minute to keep this lobby open.':'Return to the lobby within one minute to keep playing.');}
+    }
     if(this.stage==='warmup'||this.stage==='countdown'||this.stage==='racing'){
       this.remaining=Math.max(0,this.remaining-dt);
       if(this.remaining<=0){if(this.stage==='warmup'){this.stage='countdown';this.remaining=5;this.reason='Back to the starting grid';this.resetPlayers();void this.lock();}else if(this.stage==='countdown')this.beginRace();else this.end('Time is up.');}

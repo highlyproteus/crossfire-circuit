@@ -2,6 +2,7 @@ import { Client, type Room } from '@colyseus/sdk';
 import type { Simulation, Input } from './simulation';
 import type { View } from './view';
 import type { WorldState } from './network-types';
+import { LOBBY_EXPIRED_MESSAGE } from './lobby-policy';
 export class Multiplayer {
   room?:Room;
   state?:WorldState;
@@ -45,7 +46,7 @@ export class Multiplayer {
     const message=error instanceof Error?error.message:String(error);
     if(/not found|not defined|no rooms|invalid room|expired|locked|already started|race has started/i.test(message))return 'That lobby has ended or the race has started. Ask your friend for a new lobby invite.';
     if(/full|maxClients/i.test(message))return 'This lobby is full. Ask your friend to open another lobby.';
-    if(/name|2–18|busy|circuits|server is reconnecting/i.test(message))return message;
+    if(/name|2–18|busy|circuits|server is reconnecting|too many (new lobbies|join attempts)/i.test(message))return message;
     return navigator.onLine?'Could not reach the game server. Please try again.':'You are offline. Reconnect to Wi-Fi or mobile data, then try again.';
   }
   async connect(name:string,roomId=''){
@@ -61,15 +62,17 @@ export class Multiplayer {
     }catch(e){if(generation===this.generation){this.error=this.friendly(e);this.onChange();}throw e;}
   }
   private attach(room:Room){
+    let lobbyExpired=false;
     this.room=room;this.connected=true;this.reconnecting=false;this.error='';this.receivedAt=performance.now();this.pendingShot=false;
     // We retry through discovery so a replacement tunnel can retain the same room.
     room.reconnection.enabled=false;this.remember(room);
     room.onMessage('world',(state:WorldState)=>{if(this.room!==room)return;this.state=state;this.receivedAt=performance.now();if(this.receivedAt-this.savedAt>1000)this.remember(room);this.onChange();});
     room.onMessage('notice',(message:string)=>{if(this.room===room){this.error=message;this.onChange();}});
+    room.onMessage('lobby-expired',()=>{lobbyExpired=true;});
     room.onMessage('pong',(sent:number)=>{if(this.room===room)this.latency=Math.round(performance.now()-sent);});
     room.onDrop(()=>{if(this.room===room)void this.recover(room);});
     room.onError(()=>{if(this.room===room&&!this.reconnecting)void this.recover(room);});
-    room.onLeave(()=>{if(this.room!==room||this.reconnecting)return;this.connected=false;this.storage(room.roomId,null);this.error='Your session has ended. Return to the lobby to join again.';this.onChange();});
+    room.onLeave(()=>{if(this.room!==room||this.reconnecting)return;this.connected=false;this.storage(room.roomId,null);this.error=lobbyExpired?LOBBY_EXPIRED_MESSAGE:'Your session has ended. Return to the lobby to join again.';this.onChange();});
   }
   private async recover(previous:Room){
     if(this.reconnecting||this.room!==previous)return;

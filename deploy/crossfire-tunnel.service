@@ -1,7 +1,7 @@
 [Unit]
-Description=Crossfire public playtest tunnel and Convex discovery
-After=network-online.target crossfire-circuit.service
-Wants=network-online.target crossfire-circuit.service
+Description=Crossfire permanent multiplayer endpoint discovery
+After=network-online.target crossfire-circuit.service crossfire-tunnel-connector.service
+Wants=network-online.target crossfire-circuit.service crossfire-tunnel-connector.service
 [Service]
 User=crossfire
 Group=crossfire
