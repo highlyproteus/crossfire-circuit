@@ -1,35 +1,53 @@
 # Hosting and operations
 
-This runbook describes the Proteus Labs deployment. See the [development guide](development.md) to run an independent local game.
+Crossfire Circuit uses a static Vercel frontend, a long-running Colyseus server on EC2, Convex for results and discovery, a named Cloudflare tunnel, and LiveKit for optional lobby voice. See [development](development.md) for local setup and environment variables.
 
-- **Vercel:** `proteus5/crossfire-circuit`, public frontend at https://opencrossfirecircuit.party/ (the original https://crossfire-circuit.vercel.app/ address also works). Domain registration and DNS belong to the Proteus Cloudflare account.
-- **Colyseus 0.18:** `crossfire-circuit.service` on a dedicated EC2 instance in **Proteus Labs**. Runs as the unprivileged `crossfire` user, bound to localhost:2567. This game must never share infrastructure with Hive3 or another company. The account and host are recorded in [deploy/production.json](../deploy/production.json).
-- **Convex:** production deployment `clever-gerbil-617`. Run project commands from this checkout using `--prod`. Stores completed rounds, fastest completed laps, and the current public server endpoint. Only the game server can write results or register an endpoint, using a server-only secret. Result saves use an idempotent key and a durable disk outbox for retries.
-- **Permanent multiplayer transport:** `crossfire-tunnel-connector.service` runs a dedicated named Cloudflare tunnel at https://multiplayer.opencrossfirecircuit.party/. `crossfire-tunnel.service` publishes that origin to Convex only while the game and connector are ready. Discovery accepts only the configured HTTPS origin; temporary tunnel names and other hosts are rejected. Clients use discovery when joining and reconnecting. Connector restarts may still interrupt sockets; reconnection preserves a player's session while the game process remains running.
-- Administration uses AWS Systems Manager in the Proteus account. The dedicated security group has zero inbound rules; the SSH service and socket are disabled. Storage is encrypted, IMDSv2 is required, and service hardening blocks game/tunnel access to instance metadata. The instance has the SSM core role, with temporary migration storage permissions removed after transfer.
+## Deployment configuration
 
-The server runs physics at 60 Hz and broadcasts snapshots at 20 Hz. Clients send bounded inputs at 30 Hz and interpolate/extrapolate render poses by at most 80 ms. The server owns movement, collisions, checkpoints, role selection, ammo, damage, round timing, and standings. Client-side prediction and lag-compensated hit rewind are future improvements; latency affects steering and aiming responsiveness.
+[`deploy/production.example.json`](../deploy/production.example.json) documents the configuration fields without real account or resource IDs. Each operator keeps a populated `deploy/production.json` locally. This file and `deploy/*.local.md` are ignored by Git and excluded from Vercel uploads. Do not overwrite an existing verified configuration with the example.
 
-Public beta capacity is four simultaneous circuits, each with up to 26 players. New-lobby requests have a per-network burst allowance of two, replenished over five minutes. Joining and reconnecting use separate, larger budgets so a full group can share Wi-Fi. The request guard runs ahead of Colyseus matchmaking, bounds request bodies, and rate-limits WebSocket handshakes. Set `TRUST_CLOUDFLARE=true` only on the loopback-bound production origin: it uses Cloudflare's client address only from a local connector, ignores other forwarding headers, and groups IPv6 clients by /64. Rate-limit state is in memory and resets on restart; this is basic abuse mitigation, not distributed attack protection.
+The maintained deployment belongs to Proteus Labs. Its verified account and host remain in the local configuration; Vercel, Convex, and provider project details remain in `deploy/operations.local.md`. Follow [AGENTS.md](../AGENTS.md) when operating this installation. An independent installation needs its own resources and credentials.
 
-Waiting lobbies close after five minutes without starting, with a one-minute warning. Results close after two minutes unless the leader returns to the lobby. Inputs, pings, extra joins, and reconnects do not extend the waiting deadline. Active rounds keep the existing 90-second reconnect allowance. Starting another round within the same lobby does not consume a new-lobby request.
-
-Deployment units are in `deploy/`. Install `crossfire-hardening.conf` as a systemd drop-in for both game and tunnel units. Runtime source lives at `/opt/crossfire-circuit/current` on EC2; server-only environment is `/etc/crossfire-circuit.env`; unsaved match results are `/var/lib/crossfire-circuit/outbox`. Runtime source and dependencies must be root-owned and readable by the `crossfire` user; keep the environment file root-owned with mode `600`.
-
-The connector uses systemd `LoadCredential` to read its single-tunnel token from root-owned `/etc/crossfire-circuit/tunnel-token` (mode `600`). The account administration certificate stays off EC2. The connector's readiness listener is bound to localhost:20242. Cloudflare serves only the configured multiplayer hostname, with an explicit 404 fallback. Do not add public EC2 ingress or expose the readiness listener.
-
-The AWS wrapper verifies the Proteus account before issuing a command and rejects profile/region overrides. Renew the `crossfire-proteus` profile through normal browser sign-in when needed. Useful commands:
+Use `node deploy/aws.mjs` for AWS operations. It requires valid local configuration, verifies the signed-in account before running the requested command, removes ambient AWS credential overrides, and rejects profile, region, endpoint, and unsigned-request overrides. A missing configuration or account mismatch stops the operation. Renew the configured AWS profile through normal browser sign-in when necessary.
 
 ```sh
 node deploy/aws.mjs sts get-caller-identity
-node deploy/aws.mjs ec2 describe-instances --filters Name=tag:Project,Values=crossfire-circuit
 node deploy/aws.mjs ssm describe-instance-information
-npx convex run --prod servers:current '{}'
-npx convex run --prod results:recent '{}'
-npm run test:multiplayer
 node --test deploy/aws.test.mjs
 ```
 
-For private-repository Vercel deployments, use your verified Git author identity associated with the hosting team. Keep repository authentication and deployment authorization in the Proteus hosting team.
+The wrapper tests use fictional account settings and a mock CLI; they do not contact AWS or need private operator configuration.
 
-`VITE_CONVEX_URL` and `VITE_SERVER_DISCOVERY=true` configure the Vercel production build. The obsolete fixed game-server endpoint has been removed from production settings. `CONVEX_URL` and `GAME_SERVER_SECRET` belong only on EC2/Convex. Do not put the latter in Vite variables. Set `GAME_SERVER_PUBLIC_ORIGIN=https://multiplayer.opencrossfirecircuit.party` in both the EC2 environment and the production Convex environment. Avoid restarting the game service during an active match; in-memory lobbies do not survive server restarts.
+## Services and network
+
+The systemd definitions are in [`deploy/`](../deploy/). The game runs as the unprivileged `crossfire` user, bound to `127.0.0.1:2567`. A named Cloudflare tunnel provides the public HTTPS/WebSocket origin. Discovery publishes the approved origin to Convex only while the game and connector are ready; client joins and reconnects use that origin.
+
+The maintained EC2 deployment uses Systems Manager for administration, zero public inbound security-group rules, disabled SSH, encrypted storage, and required IMDSv2. Service hardening blocks instance-metadata access. Keep the game and readiness listeners bound to loopback; do not expose them directly to the internet.
+
+Install `crossfire-hardening.conf` as a systemd drop-in for the game and tunnel units. Runtime source lives at `/opt/crossfire-circuit/current`; unsaved results are stored in `/var/lib/crossfire-circuit/outbox`. Runtime source and dependencies must be root-owned and readable by `crossfire`.
+
+## Secrets and provider setup
+
+Store server-only environment variables in `/etc/crossfire-circuit.env`, root-owned with mode `600`. The game and Convex deployments share `GAME_SERVER_SECRET` and the approved `GAME_SERVER_PUBLIC_ORIGIN`. Result writes are authenticated, idempotent, and retried from the durable outbox. Only the public Convex URL and discovery flag belong in `VITE_` variables.
+
+The connector reads its single-tunnel token through systemd `LoadCredential` from `/etc/crossfire-circuit/tunnel-token`, root-owned with mode `600`. The Cloudflare account administration certificate stays off EC2. The connector's readiness listener uses `127.0.0.1:20242`; configure the multiplayer hostname with an explicit 404 fallback for other requests.
+
+LiveKit's API key and secret belong only in the game-server environment. Missing voice configuration disables voice without disabling gameplay. Never commit environment files, provider tokens, private keys, or populated operator configuration.
+
+Use a verified Git identity authorized for your Vercel team. Confirm the linked Vercel and Convex projects before deployment. Set `VITE_CONVEX_URL` and `VITE_SERVER_DISCOVERY=true` for the hosted frontend; do not bake server credentials into the browser build.
+
+## Capacity and recovery
+
+Public beta capacity is four simultaneous circuits of up to 26 players. New-lobby requests have a per-network burst allowance of two, replenished over five minutes. Joining and reconnecting have separate budgets. Admission checks bound request bodies and rate-limit WebSocket handshakes.
+
+Set `TRUST_CLOUDFLARE=true` only for the loopback-bound origin: it accepts Cloudflare's client address only from a local connector, ignores other forwarding headers, and groups IPv6 clients by /64. Rate-limit state is in memory and resets on restart; this is basic abuse mitigation.
+
+Waiting lobbies expire after five minutes without starting, with a one-minute warning. Results close after two minutes unless the leader returns to the lobby. Inputs, pings, extra joins, and reconnects do not extend the waiting deadline. Disconnected players retain a 90-second reconnect allowance.
+
+The server runs physics at 60 Hz and broadcasts at 20 Hz. Clients send inputs at 30 Hz and interpolate render poses. Client-side prediction and hit rewind are future improvements, so latency affects steering and aiming.
+
+## Release checks
+
+Before changing a live service, verify account and host ownership, check active lobbies, and archive the deployed source and protected configuration. Restarting the game process ends in-memory lobbies; connector restarts can interrupt sockets. Preserve unrelated services and avoid restarts during matches.
+
+Run the build, multiplayer tests, and account-guard tests before release. After deployment, verify the website, the multiplayer `/health` endpoint, Convex discovery, and a real connection through the public hostname. Synthetic connection/media tests do not replace physical-device or human voice testing.

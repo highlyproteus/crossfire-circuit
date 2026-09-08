@@ -80,3 +80,7 @@ node --test deploy/aws.test.mjs
 Automated checks cover a 26-player session, reconnects, combat physics, lobby controls, and voice permissions. Physical iOS/Android gameplay, human-to-human voice quality, and larger load tests remain playtest work. The hosted beta is capped at four simultaneous 26-player lobbies.
 
 The server owns gameplay state. Restarting it ends active lobbies; temporary connection drops have a 90-second reconnect allowance. See [hosting and operations](docs/hosting.md) for capacity and deployment details.
+
+## License
+
+Licensed under the [MIT License](LICENSE). Third-party dependencies retain their respective licenses.

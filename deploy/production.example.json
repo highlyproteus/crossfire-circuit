@@ -1,0 +1,13 @@
+{
+  "company": "Your organization",
+  "awsAccountId": "",
+  "awsProfile": "crossfire",
+  "region": "us-east-2",
+  "instanceId": "",
+  "securityGroupId": "",
+  "cloudflareAccountId": "",
+  "cloudflareZoneId": "",
+  "cloudflareTunnelId": "",
+  "publicSiteOrigin": "https://play.example.com",
+  "publicGameOrigin": "https://multiplayer.example.com"
+}

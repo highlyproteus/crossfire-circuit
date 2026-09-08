@@ -5,6 +5,10 @@ output/
 .vercel
 work/
 
+# Private operator configuration; only the example is tracked
+/deploy/production.json
+/deploy/*.local.md
+
 # Local browser automation and OS files
 .playwright-cli/
 .DS_Store

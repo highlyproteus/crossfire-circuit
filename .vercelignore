@@ -9,3 +9,5 @@ qa*.json
 audio-generation.json
 audio-validation.json
 source-assets
+deploy/production.json
+deploy/*.local.md
