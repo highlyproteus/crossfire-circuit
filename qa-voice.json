@@ -1,0 +1,47 @@
+{
+  "defaultMicOff": true,
+  "webRtc": [
+    {
+      "bytes": 5449,
+      "packets": 67,
+      "energy": 0.22058510750068366
+    }
+  ],
+  "personalMute": true,
+  "leaderMute": true,
+  "captureReleased": true,
+  "allowDoesNotStartMic": true,
+  "deafen": true,
+  "voiceReconnectMicOff": true,
+  "gameReconnectMicOff": true,
+  "leaveReleasesMicrophone": true,
+  "mobilePortrait": true,
+  "mobileLandscape": true,
+  "mobileMovementAndVoice": true,
+  "permissionDeniedRecovery": true,
+  "crossLobbyIsolation": true,
+  "hud": [
+    {
+      "id": "voice-open",
+      "x": 681.234375,
+      "y": 10,
+      "w": 44,
+      "h": 44
+    },
+    {
+      "id": "voice-quick-mic",
+      "x": 730.234375,
+      "y": 10,
+      "w": 52.765625,
+      "h": 44
+    },
+    {
+      "id": "pause",
+      "x": 788,
+      "y": 10,
+      "w": 44,
+      "h": 44
+    }
+  ],
+  "method": "Three real browser connections to LiveKit with synthetic microphone; phone viewport and touch emulation."
+}

@@ -5,6 +5,7 @@ import { closest, checkpoints } from '../src/course';
 import type { PlayerInput, PlayerState, RoundPhase, WorldState } from '../src/network-types';
 import { queueResult } from './results';
 import { LOBBY_WAIT_MS, RESULTS_WAIT_MS, LOBBY_EXPIRED_MESSAGE } from '../src/lobby-policy';
+import { LobbyVoice, configuredVoiceService, type VoiceService } from './voice';
 const ZERO:PlayerInput={throttle:0,steer:0,brake:false,yaw:0,ads:false,fire:false,direction:{x:0,y:0,z:-1}};
 type Entry={name:string;sim:Simulation;connected:boolean;input:PlayerInput;lastInput:number;finished:number;serial:number};
 export class ArenaRoom extends Room {
@@ -15,12 +16,16 @@ export class ArenaRoom extends Room {
   leader='';stage:RoundPhase='lobby';remaining=0;elapsed=0;round=0;reason='';marksman='';
   private departed=new Map<string,PlayerState>();private instanceId=randomUUID();private accumulator=0;private tick=0;private serial=0;private age=0;
   static active=new Set<ArenaRoom>();
+  voice!:LobbyVoice;
+  protected voiceService():VoiceService|undefined{return configuredVoiceService();}
   private waitingSince=0;private expiryWarned=false;private expiring=false;
   protected now(){return Date.now();}
   private resetWait(){this.waitingSince=this.now();this.expiryWarned=false;}
   onCreate(){
     if(ArenaRoom.active.size>=4)throw new ServerError(503,'All circuits are busy. Try again shortly.');
     ArenaRoom.active.add(this);this.setPrivate(true);this.resetWait();
+    this.voice=new LobbyVoice(this.instanceId,{member:id=>this.players.get(id),leader:()=>this.leader,changed:()=>this.publish()},this.voiceService());
+    this.onMessage('voice',(client,data:unknown)=>{void this.voice.request(client.sessionId,data).then(reply=>{if(reply&&this.players.get(client.sessionId)?.connected)client.send('voice-reply',reply);});});
     this.arena=new Simulation();this.arena.start(true);this.arena.body.setEnabled(false);this.arena.externalStep=true;
     this.onMessage('input',(client,data:unknown)=>{const p=this.players.get(client.sessionId);if(!p||!p.connected||!data||typeof data!=='object')return;const d=data as Record<string,unknown>,vec=d.direction as Record<string,unknown>|undefined;
       const finite=(v:unknown)=>typeof v==='number'&&Number.isFinite(v);
@@ -45,10 +50,10 @@ export class ArenaRoom extends Room {
     const sim=new Simulation(false,this.arena.world);sim.spawnSlot=this.freeSlot();sim.start(true);sim.barrels=this.arena.barrels;sim.phase=this.stage==='warmup'?'racing':'staging';
     this.players.set(client.sessionId,{name:unique,sim,connected:true,input:{...ZERO},lastInput:0,finished:0,serial:++this.serial});if(!this.leader)this.leader=client.sessionId;this.refreshTargets();this.publish();
   }
-  onDrop(client:Client,code?:number){console.info(JSON.stringify({event:'player_disconnected',room:this.roomId,code,stage:this.stage,players:this.players.size}));const p=this.players.get(client.sessionId);if(p){p.connected=false;p.input={...ZERO};this.transferLeader();this.publish();}this.allowReconnection(client,90);}
+  onDrop(client:Client,code?:number){console.info(JSON.stringify({event:'player_disconnected',room:this.roomId,code,stage:this.stage,players:this.players.size}));const p=this.players.get(client.sessionId);if(p){p.connected=false;p.input={...ZERO};void this.voice.suspend(client.sessionId);this.transferLeader();this.publish();}this.allowReconnection(client,90);}
   onReconnect(client:Client){console.info(JSON.stringify({event:'player_reconnected',room:this.roomId,stage:this.stage}));const p=this.players.get(client.sessionId);if(p){p.connected=true;p.lastInput=this.age;if(!this.leader)this.leader=client.sessionId;this.publish();}}
-  onLeave(client:Client){const p=this.players.get(client.sessionId);if(!p)return;if(this.stage==='racing'){const state=this.snapshot().players.find(p=>p.id===client.sessionId);if(state)this.departed.set(client.sessionId,state);}p.sim.disposePlayer();this.players.delete(client.sessionId);this.transferLeader();this.refreshTargets();if(client.sessionId===this.marksman&&this.stage==='racing')this.end('The marksman left. Start another round.');else if(this.connected().length<2&&['warmup','countdown','racing'].includes(this.stage))this.end('Not enough players remain.');this.publish();}
-  onDispose(){ArenaRoom.active.delete(this);this.arena?.world.free();}
+  onLeave(client:Client){const p=this.players.get(client.sessionId);if(!p)return;if(this.stage==='racing'){const state=this.snapshot().players.find(p=>p.id===client.sessionId);if(state)this.departed.set(client.sessionId,state);}p.sim.disposePlayer();this.players.delete(client.sessionId);void this.voice.remove(client.sessionId).catch(()=>{});this.transferLeader();this.refreshTargets();if(client.sessionId===this.marksman&&this.stage==='racing')this.end('The marksman left. Start another round.');else if(this.connected().length<2&&['warmup','countdown','racing'].includes(this.stage))this.end('Not enough players remain.');this.publish();}
+  onDispose(){ArenaRoom.active.delete(this);this.arena?.world.free();return this.voice?.dispose();}
   private connected(){return [...this.players.entries()].filter(([,p])=>p.connected);}
   private transferLeader(){if(!this.players.get(this.leader)?.connected)this.leader=this.connected()[0]?.[0]??'';}
   private freeSlot(){const used=new Set([...this.players.values()].map(p=>p.sim.spawnSlot));let slot=0;while(used.has(slot))slot++;return slot;}
@@ -98,7 +103,7 @@ export class ArenaRoom extends Room {
       players.push({id,name:p.name,connected:p.connected,role:s.role,phase:s.phase,p:position,v:s.role==='driver'?{...s.body.linvel()}:{x:0,y:0,z:0},yaw:s.yaw,steering:s.steering,speed:s.speed,health:s.health,checkpoint:s.checkpoint,progress,deaths:s.deaths,kills:s.kills,finished:p.finished,invulnerable:s.invulnerable,deathTimer:s.deathTimer,blastTime:s.blastTime,grounded:s.grounded,boostTime:s.boostTime,routeName:s.routeName,markYaw:s.markYaw,markMoving:s.markMoving,ammo:{...s.ammo},attackType:s.attackType,cooldown:s.cooldown,reloadTime:s.reloadTime,reloadDuration:s.reloadDuration,reloadWeapon:s.reloadWeapon,lastHit:s.lastHit,message:s.message,messageTime:s.messageTime});
       for(const e of s.effects)effects.push({...e,id:p.serial*1000000+e.id});for(const r of s.rockets)rockets.push({...r,id:p.serial*1000000+r.id});
     }
-    return{roomId:this.roomId,leader:this.leader,stage:this.stage,remaining:this.remaining,elapsed:this.elapsed,round:this.round,reason:this.reason,marksman:this.marksman,players,barrels:this.arena.barrels.map(b=>({id:b.id,p:{...b.body.translation()},q:{...b.body.rotation()},active:b.active,explosive:b.explosive})),effects,rockets,tick:this.tick};
+    return{roomId:this.roomId,leader:this.leader,stage:this.stage,remaining:this.remaining,elapsed:this.elapsed,round:this.round,reason:this.reason,marksman:this.marksman,players,voice:this.voice.state(),barrels:this.arena.barrels.map(b=>({id:b.id,p:{...b.body.translation()},q:{...b.body.rotation()},active:b.active,explosive:b.explosive})),effects,rockets,tick:this.tick};
   }
   private publish(){if(this.clients.length)this.broadcast('world',this.snapshot());}
 }

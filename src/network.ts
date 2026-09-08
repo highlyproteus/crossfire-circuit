@@ -3,6 +3,7 @@ import type { Simulation, Input } from './simulation';
 import type { View } from './view';
 import type { WorldState } from './network-types';
 import { LOBBY_EXPIRED_MESSAGE } from './lobby-policy';
+import type { VoiceAction,VoiceReply,VoiceRequest } from './voice-types';
 export class Multiplayer {
   room?:Room;
   state?:WorldState;
@@ -17,12 +18,25 @@ export class Multiplayer {
   private savedAt=0;
   private sendClock=0;private pingClock=0;
   private role='';private lastRound=-1;private lastStage='';
+  private voiceSequence=0;
+  private voiceRequests=new Map<number,{room:Room;resolve:(reply:VoiceReply)=>void;reject:(error:Error)=>void;timer:ReturnType<typeof setTimeout>}>();
   onChange=()=>{};
   constructor(private sim:Simulation,private view:View){
     addEventListener('online',()=>this.checkConnection());
     document.addEventListener('visibilitychange',()=>{if(!document.hidden)this.checkConnection();});
   }
   requestShot(){if(this.connected&&!this.localPaused)this.pendingShot=true;}
+  requestVoice(action:VoiceAction,options:Pick<VoiceRequest,'target'|'enabled'|'muted'>={}):Promise<VoiceReply>{
+    const room=this.room;if(!room||!this.connected)return Promise.reject(new Error('Reconnect to the game before using voice chat.'));
+    if(this.voiceRequests.size>=4)return Promise.reject(new Error('Voice controls are busy. Please try again in a moment.'));
+    const requestId=this.voiceSequence=(this.voiceSequence+1)%1_000_000_000;
+    return new Promise((resolve,reject)=>{
+      const timer=setTimeout(()=>{this.voiceRequests.delete(requestId);reject(new Error('Voice chat did not respond. Please try again.'));},12000);
+      this.voiceRequests.set(requestId,{room,resolve,reject,timer});
+      room.send('voice',{requestId,action,...options});
+    });
+  }
+  private cancelVoiceRequests(){for(const pending of this.voiceRequests.values()){clearTimeout(pending.timer);pending.reject(new Error('The game connection changed. Please try voice chat again.'));}this.voiceRequests.clear();}
   private storage(roomId:string,value?:{token:string;at:number}|null){
     try{const key=`crossfire-reconnect-${roomId}`;if(value===null){sessionStorage.removeItem(key);return;}if(value){sessionStorage.setItem(key,JSON.stringify(value));return;}const raw=sessionStorage.getItem(key);if(!raw)return;const saved=JSON.parse(raw);if(typeof saved.token==='string'&&Date.now()-saved.at<90000)return saved as {token:string;at:number};sessionStorage.removeItem(key);}catch{}
   }
@@ -62,6 +76,7 @@ export class Multiplayer {
     }catch(e){if(generation===this.generation){this.error=this.friendly(e);this.onChange();}throw e;}
   }
   private attach(room:Room){
+    this.cancelVoiceRequests();
     let lobbyExpired=false;
     this.room=room;this.connected=true;this.reconnecting=false;this.error='';this.receivedAt=performance.now();this.pendingShot=false;
     // We retry through discovery so a replacement tunnel can retain the same room.
@@ -69,13 +84,15 @@ export class Multiplayer {
     room.onMessage('world',(state:WorldState)=>{if(this.room!==room)return;this.state=state;this.receivedAt=performance.now();if(this.receivedAt-this.savedAt>1000)this.remember(room);this.onChange();});
     room.onMessage('notice',(message:string)=>{if(this.room===room){this.error=message;this.onChange();}});
     room.onMessage('lobby-expired',()=>{lobbyExpired=true;});
+    room.onMessage('voice-reply',(reply:VoiceReply)=>{const pending=this.voiceRequests.get(reply.requestId);if(!pending||pending.room!==room||this.room!==room)return;clearTimeout(pending.timer);this.voiceRequests.delete(reply.requestId);if(reply.ok)pending.resolve(reply);else pending.reject(new Error(reply.error??'Voice chat is unavailable.'));});
     room.onMessage('pong',(sent:number)=>{if(this.room===room)this.latency=Math.round(performance.now()-sent);});
     room.onDrop(()=>{if(this.room===room)void this.recover(room);});
     room.onError(()=>{if(this.room===room&&!this.reconnecting)void this.recover(room);});
-    room.onLeave(()=>{if(this.room!==room||this.reconnecting)return;this.connected=false;this.storage(room.roomId,null);this.error=lobbyExpired?LOBBY_EXPIRED_MESSAGE:'Your session has ended. Return to the lobby to join again.';this.onChange();});
+    room.onLeave(()=>{if(this.room!==room||this.reconnecting)return;this.cancelVoiceRequests();this.connected=false;this.storage(room.roomId,null);this.error=lobbyExpired?LOBBY_EXPIRED_MESSAGE:'Your session has ended. Return to the lobby to join again.';this.onChange();});
   }
   private async recover(previous:Room){
     if(this.reconnecting||this.room!==previous)return;
+    this.cancelVoiceRequests();
     this.connected=false;this.reconnecting=true;this.pendingShot=false;
     const generation=this.generation,token=previous.reconnectionToken,deadline=Date.now()+75000;
     previous.reconnection.enabled=false;previous.connection.close(4010,'Reconnecting');
@@ -92,6 +109,7 @@ export class Multiplayer {
   }
   private checkConnection(){if(this.room&&this.connected&&performance.now()-this.receivedAt>6000)void this.recover(this.room);}
   async leave(){
+    this.cancelVoiceRequests();
     ++this.generation;const room=this.room;this.room=undefined;this.state=undefined;this.connected=false;this.reconnecting=false;this.localPaused=false;this.pendingShot=false;this.view.networkState=undefined;this.view.localSession='';this.sim.externalStep=false;this.sim.paused=false;this.role='';this.error='';
     if(room){this.storage(room.roomId,null);room.reconnection.enabled=false;void room.leave().catch(()=>{});}
     const url=new URL(location.href);url.searchParams.delete('room');history.replaceState(null,'',url);this.onChange();
