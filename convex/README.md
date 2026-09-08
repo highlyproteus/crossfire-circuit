@@ -1,90 +1,16 @@
-# Welcome to your Convex functions directory!
+# Results and server discovery
 
-Write your Convex functions here.
-See https://docs.convex.dev/functions for more.
+Convex stores completed rounds, fastest laps, and the current multiplayer endpoint. Live gameplay runs in the Colyseus server.
 
-A query function that takes two arguments looks like:
+| File | Responsibility |
+| --- | --- |
+| [schema.ts](schema.ts) | `servers`, `matches`, and `laps` tables and indexes |
+| [results.ts](results.ts) | Read recent rounds and fastest laps; record completed rounds |
+| [servers.ts](servers.ts) | Read and publish the approved multiplayer origin |
+| [_generated/](_generated/) | Convex-generated API bindings and types |
 
-```ts
-// convex/myFunctions.ts
-import { query } from "./_generated/server";
-import { v } from "convex/values";
+Read queries are public. Result writes and endpoint registration require `GAME_SERVER_SECRET`, configured only in the game-server and Convex environments. Endpoint registration also validates `GAME_SERVER_PUBLIC_ORIGIN`. Match keys make result retries idempotent.
 
-export const myQueryFunction = query({
-  // Validators for arguments.
-  args: {
-    first: v.number(),
-    second: v.string(),
-  },
+The client uses `VITE_CONVEX_URL` for public queries. The game server uses `CONVEX_URL` and keeps unsaved results in a durable outbox until writes succeed. Local gameplay works without Convex configuration.
 
-  // Function implementation.
-  handler: async (ctx, args) => {
-    // Read the database as many times as you need here.
-    // See https://docs.convex.dev/database/reading-data.
-    const documents = await ctx.db.query("tablename").collect();
-
-    // Arguments passed from the client are properties of the args object.
-    console.log(args.first, args.second);
-
-    // Write arbitrary JavaScript here: filter, aggregate, build derived data,
-    // remove non-public properties, or create new objects.
-    return documents;
-  },
-});
-```
-
-Using this query function in a React component looks like:
-
-```ts
-const data = useQuery(api.myFunctions.myQueryFunction, {
-  first: 10,
-  second: "hello",
-});
-```
-
-A mutation function looks like:
-
-```ts
-// convex/myFunctions.ts
-import { mutation } from "./_generated/server";
-import { v } from "convex/values";
-
-export const myMutationFunction = mutation({
-  // Validators for arguments.
-  args: {
-    first: v.string(),
-    second: v.string(),
-  },
-
-  // Function implementation.
-  handler: async (ctx, args) => {
-    // Insert or modify documents in the database here.
-    // Mutations can also read from the database like queries.
-    // See https://docs.convex.dev/database/writing-data.
-    const message = { body: args.first, author: args.second };
-    const id = await ctx.db.insert("messages", message);
-
-    // Optionally, return a value from your mutation.
-    return await ctx.db.get("messages", id);
-  },
-});
-```
-
-Using this mutation function in a React component looks like:
-
-```ts
-const mutation = useMutation(api.myFunctions.myMutationFunction);
-function handleButtonPress() {
-  // fire and forget, the most common way to use mutations
-  mutation({ first: "Hello!", second: "me" });
-  // OR
-  // use the result once the mutation has completed
-  mutation({ first: "Hello!", second: "me" }).then((result) =>
-    console.log(result),
-  );
-}
-```
-
-Use the Convex CLI to push your functions to a deployment. See everything
-the Convex CLI can do by running `npx convex -h` in your project root
-directory. To learn more, launch the docs with `npx convex docs`.
+See [development](../docs/development.md) for environment variables and [hosting](../docs/hosting.md) for the Proteus production deployment.

@@ -1,172 +1,82 @@
 # Crossfire Circuit
 
-An ATV racing and marksman game built with TypeScript, Three.js, Rapier, Vite, and Colyseus. Multiplayer runs on one authoritative physics world; solo runs remain available.
+An arcade ATV racing game above the void. Drivers tackle a floating obstacle course while one marksman tries to knock them off from the central tower.
 
-## Play
+**[Play Crossfire Circuit](https://opencrossfirecircuit.party/)** · [Development](docs/development.md) · [Hosting](docs/hosting.md) · [Asset sources](source-assets/README.md)
 
-Open **https://crossfire-circuit.vercel.app/** to play online.
+## The game
 
-1. Choose **Play with friends**, enter a name, and leave the lobby code blank to create a room.
-2. Copy the invite link to friends, or have them enter the lobby code. Names appear above drivers and in the live standings.
-3. The lobby leader can start once at least two players have joined. Capacity is 26 total: up to 25 drivers and one marksman.
-4. Everyone drives freely for 30 seconds. A five-second countdown resets the grid, then the server randomly selects one connected player as marksman and moves them to the tower.
-5. Drivers race through eight checkpoints. The round lasts up to ten minutes; the first finish starts a final 60-second window. The leader can return everyone to the lobby afterward.
+- **Race with friends:** up to 25 drivers and one randomly assigned marksman, with invite links, lobby codes, and live standings.
+- **Choose your route:** a 2.76 km circuit with elevated roads, lower decks, shortcuts, boosts, jumps, and obstacles.
+- **Cause some chaos:** explosive fuel drums and a tower of rolling barrels react to vehicle impacts and blasts.
+- **Keep racing:** recover at checkpoints after falls or takedowns. Completed rounds and fastest laps appear in the results panel.
+- **Coordinate over voice:** opt-in lobby voice chat, personal mute, deafen, and leader moderation. Microphones start off.
+- **Practice solo:** drive against an AI attacker, disable attacks for practice, or play marksman against AI riders.
 
-Brief disconnects have a 20-second rejoin window. The leader transfers to another connected player. A marksman who fails to reconnect ends the round. Mid-race joining is locked; names are display names rather than authenticated accounts.
+Built with TypeScript, Three.js, Rapier, and Colyseus, with Convex for results and server discovery and LiveKit for voice.
 
-For local development run `npm install`, `npm run server`, and `npm run dev` in separate terminals; open http://127.0.0.1:5190/. Online physics continue while a player opens settings; their controls stop until they return.
+## Play with friends
 
-Choose **Ride the circuit** or **Play as marksman**. Practice disables the AI attacker while driving. Escape pauses; **Choose another role** returns to the menu. Music and sound start with your first role selection; use the sound button to mute, or the pause-menu sliders to adjust music and effects separately.
+1. Choose **Play with friends** and enter a display name. Leave the lobby code blank to create a room.
+2. Share the invite link or lobby code. The leader can start with at least two players.
+3. Drive freely during a 30-second warm-up. A five-second countdown follows, then one player becomes the marksman.
+4. Race through eight checkpoints. Rounds last up to ten minutes; the first finisher starts a final 60-second window.
 
-| Driver | Action |
-|---|---|
-| W / S | Accelerate / brake and reverse |
-| A / D | Steer |
-| Space | Handbrake / drift |
-| E | Mount the ATV |
-| R | Recover at the last checkpoint |
-| Right mouse drag | Look around |
+Both weapons hold four rounds. Sniper shots and fuel-barrel blasts each deal 25 damage; a barrel chain reaction applies one health hit per driver. Blasts also apply physical knockback, so being launched into the void can still be fatal.
 
-| Marksman | Action |
-|---|---|
-| W / A / S / D | Walk around the overlook |
-| Mouse | Aim |
-| Left click | Fire; hold for repeated shots |
-| Shift | Toggle aim down sights (ADS) |
-| Hold right mouse | Temporary ADS |
-| R | Reload |
-| 1 / 2 | Sniper rifle / rocket launcher |
-| V | First-person / third-person camera |
-| Escape | Pause and release cursor |
+## Controls
 
-Touch buttons support driving, marksman movement, drag aiming, ADS, firing, and reload. Desktop is the primary playtest target; browser touch emulation does not establish physical-phone readiness.
+| Action | Driver | Marksman |
+| --- | --- | --- |
+| Move | W / S: accelerate, brake, reverse; A / D: steer | W / A / S / D: walk |
+| Aim or look | Right mouse drag | Mouse |
+| Primary action | Space: handbrake | Left mouse: fire |
+| Aim down sights | — | Shift: toggle; right mouse: hold |
+| Recover or reload | R: recover at checkpoint | R: reload |
+| Other | E: mount ATV | 1 / 2: weapon; V: camera |
+| Menu | Escape | Escape |
+| Microphone | M, after joining voice | M, after joining voice |
 
-## The playground
+On touchscreens, drivers use the joystick to steer and hold **GAS** to accelerate. Marksmen use the joystick to move, drag to aim, and tap the weapon controls. Sound and voice have separate volume controls.
 
-- **2.76 km main lap**, eight ordered checkpoints, longer straights, S-bends, western dogleg, and southern switchbacks.
-- Main lanes remain **17 m wide**, with sections opening to **22 m** and a **12.5 m** staircase challenge. Online lobbies allow 25 drivers plus one marksman. Automated connection/load testing is distinct from a 26-person device and gameplay session.
-- **Four alternate roads with vertical choices:** the purple 10 m Upper Deck climbs 14 m above the main road, while the blue 10 m Lower Deck descends 10 m below it. The cyan 12 m Service Loop bypasses the first jump at road level. The green 9 m Skyway climbs 20 m and remains hidden from the minimap. Graded entrances and exits reconnect to the main course; alternate-road progress counts toward ordered checkpoints.
-- **Four cyan Overdrive pads** boost the ATV for 2.2 seconds, reaching about 129 km/h. Brake before the next bend.
-- **72 dynamic barrels**: 24 red fuel drums detonate on ATV contact or a rifle hit; ten scattered blue drums tumble, and a four-layer tower of 38 lightweight blue drums spans the western straight. The tower stays stacked until drivers smash a path through it. Scattered positions vary per restart; the tower has a stable layout. Explosions can trigger nearby fuel drums. Destroyed or fallen barrels return on a new round.
-- Twelve staggered barriers and additional cover walls break up the straights.
-- Two jumps span **26.5 m and 27 m**. Keep full throttle and a straight approach at 95+ km/h. Slower attempts fall short.
-- Slippery tire grip, steering lag, and yaw inertia preserve sideways momentum. Handling and attacker pressure use fixed game rules. Player settings expose sound enable/mute, music volume, and sound-effect volume, alongside the control guide and menu actions.
-- Void falls and lethal damage respawn the driver at the previous checkpoint, with health restored and three seconds of protection.
+## Run locally
 
-Personal bests are stored separately for this layout.
-
-## Solo marksman mode
-
-The marksman uses the same approved rider model as the drivers. A larger circular overlook provides room to move, with cover blocks and a constrained perimeter. Rapier's character controller handles walking and cover collisions. ADS slows walking; V exposes the character and procedural walking pose in third person.
-
-Three AI riders navigate the course with the vehicle simulation, recover at checkpoints, and restart after finishing. Takedowns and escaped riders are counted separately. Every sniper hit deals 25 damage, including helmet hits and the solo AI sniper: four hits destroy a full-health ATV. Cover blocks shots. Rockets travel through the scene and apply mass-scaled radial and upward impulses. Nearby rocket and fuel-barrel blasts can launch a surviving driver clear off the course; direct hits can be lethal. Suspension and grounded handling briefly release during the launch so they do not cancel the blast. Fixed cover and spawn protection still apply. Dynamic barrels do not block explosion rays, including the drum that just detonated. Shooting a red barrel can also take out a nearby rider; damage followed by a fall within six seconds earns a takedown.
-
-The rifle and launcher each hold four rounds, with unlimited reserve ammunition. R reloads, and empty weapons reload automatically after their firing cooldown. Reloads take 1.8 / 2.4 seconds and block firing and weapon changes. First-person arms use the approved rider mesh and textures, with hand IK following the weapon. The weapon tilts during reload, the support hand moves toward the magazine, and generated mechanical audio accompanies the motion.
-
-## Custom assets and audio
-
-The approved Codex concepts became the ATV, rider, rifle, and launcher GLBs in `public/models/`. Their optimized total is about 2.79 MB. The rider is 2.35 units tall with a 24-bone rig, posed on the controls and footrests. Four separate wheel meshes steer and spin. This pass reuses the earlier approved 125-credit Meshy batch; no new Meshy generation was needed.
-
-`public/audio/` contains a new **60-second instrumental racing soundtrack** and **eight ElevenLabs effects**: engine, rifle, rocket, explosion, boost, reload, barrel clang, and checkpoint. The generation receipt is `audio-generation.json`; measured durations and codecs are in `audio-validation.json`. The observed account usage increased by 928 credits during generation. No key is included in the browser bundle or saved audio artifacts.
-
-Audio is decoded locally through Web Audio, with a limiter, independent mix levels, an engine loop whose pitch follows speed, and capped simultaneous effects. Music and engine sound fade while paused. Generation used the official [music API](https://elevenlabs.io/docs/api-reference/music/compose) and [sound-effects API](https://elevenlabs.io/docs/api-reference/text-to-sound-effects/convert).
-
-The generation script reads `ELEVENLABS_API_KEY` from the environment and skips existing MP3s. Running it after removing files will generate replacements and consume credits. `npm run assets:build` only prepares existing 3D models, without API calls.
-
-## Verification and limits
-
-`npm run build` checks TypeScript and builds the game. The existing large-bundle warning is primarily Rapier WASM.
-
-`qa-v4.json` records the current checks: all four alternate roads driven with checkpoint credit, upper and lower deck heights, four-shot magazines and reloads, rocket/barrel launches through void death, actual rocket projectile knockback with takedown credit, combat/cover/pause regressions, full main-course completion, and jump speed thresholds. First-person arms and vertical roads were also visually inspected. Repeatable scenarios are in `scripts/qa-v4-*.js`; the main-course scenario is `scripts/qa-v2-course.js`.
-
-The preceding `qa-v3.json` records feature tests: marksman movement and perimeter, reload blocking/pause/refill, barrel impacts and shooting, boost speed, driving all three alternate roads with checkpoint credit, jump speed thresholds, course completion, AI traffic, combat, actual keyboard ADS and reload interaction, and audio loading. Earlier `qa-v2*.json` records describe the preceding layout. Browser hooks are exposed only with `?qa=1`; repeatable scenarios are in `scripts/qa-v3-*.js`.
-
-Current screenshots include `arms-rifle.png`, `arms-reload.png`, `arms-rockets.png`, `upper-deck.png`, `lower-deck.png`, and `vertical-routes.png`. Procedural poses and weapon animation are prototype animations; mounting and rider ragdolls are not implemented. Solo AI riders use separate physics worlds, with barrel contacts queried against the actual shapes across worlds and scripted impact impulses. Online players instead share a single authoritative Rapier world, including ATV collisions and common barrels.
-
-`qa-multiplayer.json` records the public 26-client load test, three-browser lobby/warmup/countdown/role assignment, driving, marksman movement, Shift ADS, rifle damage, and reload checks. Server tests also cover capacity, reconnection, leader transfer, authoritative physics, and magazine limits. Completed results were verified in production Convex. These are automated checks; a full human lobby remains the next playtest.
-
-## Lobby voice chat
-
-CREW COMMS uses the Crossfire LiveKit Cloud project. Open **Voice chat** in the lobby or **VOICE** during a round, then choose **Join voice**. Joining starts in listen-only mode without requesting microphone access. **Turn mic on** (or **M** on desktop) asks for browser permission; self mute releases microphone capture. Headphones help prevent echo. Microphone capture requires HTTPS or localhost.
-
-Every player can **Mute for me**, **Deafen**, and adjust voice volume independently of music and effects. The lobby leader can **Mute for all** or **Allow mic** for individual players. Allowing a mic never switches it on; the player chooses when to speak. Closing the panel keeps voice connected. Leaving voice or the lobby stops capture. A game/voice reconnection returns the mic to off.
-
-Voice access follows the authenticated Colyseus connection, using one randomly named LiveKit room per lobby. The game server signs two-minute, identity-bound, lobby-scoped join tokens with no initial media access. Listening and microphone grants require separate requests on that same game connection. Only microphone audio is allowed; camera, screen sharing, data publishing and administrative grants are disabled. Moderation is enforced through LiveKit participant permissions, persists when rejoining voice, and follows leader handoff. Departing players are removed and empty game lobbies delete their voice room. Provider failures leave gameplay available. Recording and transcription are not enabled.
-
-Configure **LIVEKIT_URL**, **LIVEKIT_API_KEY**, and **LIVEKIT_API_SECRET** only in the protected EC2 environment, or export them into the local game-server process. The production project is `crossfire` (`p_267busmss1t`); its public endpoint is `wss://crossfire-tuzu891v.livekit.cloud`. Never prefix the API key or secret with `VITE_`, commit them, or supply them to the frontend. Rotate server configuration when revoking the corresponding LiveKit project key. Missing configuration disables voice without disabling multiplayer. Room size is capped at 26 and provider/account quotas still apply.
-
-`server/voice.test.ts` tests token scope, identity, membership, leader handoff, concurrent requests, and provider error handling. `server/voice-socket.test.ts` exercises private replies and cross-lobby moderation over real game sockets. Browser media checks use a synthetic microphone; physical iOS/Android and human-to-human audio remain manual playtest checks.
-
-## Mobile controls and connection recovery
-
-Phones and tablets use a left joystick. Drivers steer horizontally and hold GAS to accelerate, with separate brake, reverse, and recovery buttons. Marksmen move with both joystick axes, drag the scene to aim, and use FIRE, ADS, RELOAD, and the two weapon buttons. Each finger keeps independent ownership of its control, so movement and actions work together. Native touch end/cancel events reset controls even when pointer-release events are lost. Rotation, hiding controls, loss of focus, and page suspension clear held input. The driver joystick moves horizontally; the marksman joystick uses both axes. Portrait and landscape layouts include safe-area spacing, scrolling menus, compact standings, and lower-cost mobile rendering.
-
-The client detects stalled sockets, retries against freshly discovered server endpoints for up to 75 seconds, and stores the newly issued reconnect token. The server reserves disconnected players for 90 seconds. Refreshing after recovery retains the player session. Inputs stop while disconnected or backgrounded, and expiry presents a return-to-lobby action. Server restarts still end in-memory lobbies. Socket disconnect and reconnect events are logged without names or tokens.
-
-`qa-joystick.json` records the missed-release regression, independent finger releases, cancellation, rotation, and simulated visibility/lifecycle resets. `qa-mobile.json` records touch driving/combat, responsive layouts, an actual 25-second offline interruption, token rotation, and reload after recovery. Browser mobile emulation does not replace physical iOS/Android testing.
-
-## Multiplayer hosting and operation
-
-- **Vercel:** `proteus5/crossfire-circuit`, public frontend at https://opencrossfirecircuit.party/ (the original https://crossfire-circuit.vercel.app/ address also works). Domain registration and DNS belong to the Proteus Cloudflare account.
-- **Colyseus 0.18:** `crossfire-circuit.service` on a dedicated EC2 instance in **Proteus Labs**. Runs as the unprivileged `crossfire` user, bound to localhost:2567. This game must never share infrastructure with Hive3 or another company. The account and host are recorded in `deploy/production.json`.
-- **Convex:** `highlyproteus/crossfire-circuit`, production `clever-gerbil-617`. Stores completed rounds, fastest completed laps, and the current public server endpoint. Only the game server can write results or register an endpoint, using a server-only secret. Result saves use an idempotent key and a durable disk outbox for retries.
-- **Permanent multiplayer transport:** `crossfire-tunnel-connector.service` runs a dedicated named Cloudflare tunnel at https://multiplayer.opencrossfirecircuit.party/. `crossfire-tunnel.service` publishes that origin to Convex only while the game and connector are ready. Discovery accepts only the configured HTTPS origin; temporary tunnel names and other hosts are rejected. Clients use discovery when joining and reconnecting. Connector restarts may still interrupt sockets; reconnection preserves a player's session while the game process remains running.
-- Administration uses AWS Systems Manager in the Proteus account. The dedicated security group has zero inbound rules; the SSH service and socket are disabled. Storage is encrypted, IMDSv2 is required, and service hardening blocks game/tunnel access to instance metadata. The instance has the SSM core role, with temporary migration storage permissions removed after transfer.
-
-The server runs physics at 60 Hz and broadcasts snapshots at 20 Hz. Clients send bounded inputs at 30 Hz and interpolate/extrapolate render poses by at most 80 ms. The server owns movement, collisions, checkpoints, role selection, ammo, damage, round timing, and standings. Client-side prediction and lag-compensated hit rewind are future improvements; latency affects steering and aiming responsiveness.
-
-Public beta capacity is four simultaneous circuits, each with up to 26 players. New-lobby requests have a per-network burst allowance of two, replenished over five minutes. Joining and reconnecting use separate, larger budgets so a full group can share Wi-Fi. The request guard runs ahead of Colyseus matchmaking, bounds request bodies, and rate-limits WebSocket handshakes. Set `TRUST_CLOUDFLARE=true` only on the loopback-bound production origin: it uses Cloudflare's client address only from a local connector, ignores other forwarding headers, and groups IPv6 clients by /64. Rate-limit state is in memory and resets on restart; this is basic abuse mitigation, not distributed attack protection.
-
-Waiting lobbies close after five minutes without starting, with a one-minute warning. Results close after two minutes unless the leader returns to the lobby. Inputs, pings, extra joins, and reconnects do not extend the waiting deadline. Active rounds keep the existing 90-second reconnect allowance. Starting another round within the same lobby does not consume a new-lobby request.
-
-Deployment units are in `deploy/`. Install `crossfire-hardening.conf` as a systemd drop-in for both game and tunnel units. Runtime source lives at `/opt/crossfire-circuit/current` on EC2; server-only environment is `/etc/crossfire-circuit.env`; unsaved match results are `/var/lib/crossfire-circuit/outbox`. Runtime source and dependencies must be root-owned and readable by the `crossfire` user; keep the environment file root-owned with mode `600`.
-
-The connector uses systemd `LoadCredential` to read its single-tunnel token from root-owned `/etc/crossfire-circuit/tunnel-token` (mode `600`). The account administration certificate stays off EC2. The connector's readiness listener is bound to localhost:20242. Cloudflare serves only the configured multiplayer hostname, with an explicit 404 fallback. Do not add public EC2 ingress or expose the readiness listener.
-
-The AWS wrapper verifies the Proteus account before issuing a command and rejects profile/region overrides. Renew the `crossfire-proteus` profile through normal browser sign-in when needed. Useful commands:
+Use **Node.js 22** and npm.
 
 ```sh
-node deploy/aws.mjs sts get-caller-identity
-node deploy/aws.mjs ec2 describe-instances --filters Name=tag:Project,Values=crossfire-circuit
-node deploy/aws.mjs ssm describe-instance-information
-npx convex run --prod servers:current '{}'
-npx convex run --prod results:recent '{}'
+npm ci
+npm run dev
+```
+
+Open [localhost:5190](http://127.0.0.1:5190/) for solo play. For local multiplayer, also run this in a second terminal:
+
+```sh
+npm run server
+```
+
+A fresh checkout connects multiplayer to the local server on port 2567. Hosted results and voice are optional; see [configuration and testing](docs/development.md).
+
+```sh
+npm run build
 npm run test:multiplayer
 node --test deploy/aws.test.mjs
 ```
 
-For private-repository Vercel deployments, use your verified Git author identity associated with the hosting team. This project's local Git settings use the authenticated `highlyproteus` repository owner; global Git settings and existing commit history are unchanged.
+## Project structure
 
-`VITE_CONVEX_URL` and `VITE_SERVER_DISCOVERY=true` configure the Vercel production build. The obsolete fixed game-server endpoint has been removed from production settings. `CONVEX_URL` and `GAME_SERVER_SECRET` belong only on EC2/Convex. Do not put the latter in Vite variables. Set `GAME_SERVER_PUBLIC_ORIGIN=https://multiplayer.opencrossfirecircuit.party` in both the EC2 environment and the production Convex environment. Avoid restarting the game service during an active match; in-memory lobbies do not survive server restarts.
+| Directory | Contents |
+| --- | --- |
+| [src/](src/) | Game simulation, rendering, controls, UI, and network client |
+| [server/](server/) | Authoritative multiplayer rooms, admission, voice, and tests |
+| [convex/](convex/) | Persistent results and server discovery |
+| [public/](public/) | Optimized models, audio, and site assets used by the game |
+| [source-assets/](source-assets/) | Original models, approved concept art, and asset provenance |
+| [scripts/](scripts/) | Asset preparation and repeatable browser scenarios |
+| [deploy/](deploy/) | Deployment configuration and account guard |
+| [docs/](docs/) | Development and hosting guides |
 
-The September 8 migration preserved the deployed game build, verified all seven server test groups and a two-client internet test, rotated the game-server secret, and moved endpoint discovery to Proteus. Game services, credentials, runtime directories, service account, and old upload archives were removed from the previous shared host after recovery archives were verified. Its unrelated production relay retained the same process, configuration checksum, and restart count.
+## Beta status
 
-## Source
+Automated checks cover a 26-player session, reconnects, combat physics, lobby controls, and voice permissions. Physical iOS/Android gameplay, human-to-human voice quality, and larger load tests remain playtest work. The hosted beta is capped at four simultaneous 26-player lobbies.
 
-- `src/course.ts`: main route, alternate roads, ramps, checkpoints, hazards, and road geometry.
-- `src/simulation.ts`: vehicle physics, character controller, barrels, boosts, weapons, reloads, scoring, and respawns.
-- `src/driver-ai.ts`: navigation and speed planning.
-- `src/assets.ts`: model loading, cloning, proportions, and poses.
-- `src/view.ts`: scene, cameras, animations, weapon and course rendering.
-- `src/audio.ts`: generated audio loading and playback.
-- `src/main.ts`: menus, HUD, input, audio controls, and frame scheduling.
-
-- `server/arena-room.ts`: authoritative Colyseus rooms and round lifecycle.
-- `server/admission.ts`: bounded lobby creation, join, request-body and WebSocket admission.
-- `src/network.ts` and `src/network-types.ts`: client connection, inputs, and rendering snapshots.
-- `server/results.ts`: durable result outbox and Convex writes.
-- `server/tunnel.ts`: permanent endpoint readiness and discovery.
-- `src/touch-controls.ts`: simultaneous touch joystick and action input.
-- `convex/`: schemas, results, and server discovery.
-
-## Barrel and sniper balance update
-
-Explosive barrels deal a flat 25 damage (25% of maximum driver health) on contact or anywhere inside their unobstructed blast radius. A chain reaction applies this health hit once per driver; separate explosions can still add up to four hits. Knockback, cover, spawn protection and rocket damage keep their existing behavior. Being launched into the void can still kill a driver.
-
-`server/combat-physics.test.ts` covers four-hit body/helmet damage, solo sniper damage, reloads, real fuel impacts (slow, fast, sideways and tipped drums), rifle-triggered chains, blast launch and cover, ten-second tower stability and driving through it, and solo marksman AI barrel impacts. `npm run test:multiplayer` also verifies the lobby, reconnection, shared world and 26-player capacity. The blue tower is on the western straight after the first jump/bypass rejoins.
-
-## Local project location
-
-The project lives at `/Users/xtox/Projects/crossfire-circuit`. Run `npm run dev` for the browser client, `npm run server` for local multiplayer, and `npm run build` to validate a production build. Environment files and Vercel project linking moved with the project.
-
-`source-assets/` contains the source models, concept art and generation receipts. `npm run assets:build` reads its local manifest and writes intermediate models to `work/prepared/`; it does not need the original Codex output directory. Source assets and intermediate files are excluded from Vercel uploads. Original receipts elsewhere in this workspace remain available as historical records.
+The server owns gameplay state. Restarting it ends active lobbies; temporary connection drops have a 90-second reconnect allowance. See [hosting and operations](docs/hosting.md) for capacity and deployment details.

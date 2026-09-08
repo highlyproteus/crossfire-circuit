@@ -8,3 +8,15 @@ work/
 # Local browser automation and OS files
 .playwright-cli/
 .DS_Store
+
+# Generated test evidence and asset reports (source artwork stays tracked)
+/*.png
+/qa-*.json
+/qa-*.txt
+/asset-build.json
+/audio-generation.json
+/audio-validation.json
+coverage/
+playwright-report/
+test-results/
+__pycache__/

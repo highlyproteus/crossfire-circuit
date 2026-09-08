@@ -28,4 +28,6 @@ for(const asset of manifest.images){
   console.log(asset.id,results.at(-1).bytes);
 }
 await fs.writeFile(path.join(root,'public/models/manifest.json'),JSON.stringify(results.map(({id,bytes})=>({id,bytes})),null,2));
-await fs.writeFile(path.join(root,'asset-build.json'),JSON.stringify(results,null,2));
+const reports=path.join(root,'work/reports');
+await fs.mkdir(reports,{recursive:true});
+await fs.writeFile(path.join(reports,'asset-build.json'),JSON.stringify(results,null,2));

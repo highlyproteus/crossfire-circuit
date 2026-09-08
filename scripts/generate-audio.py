@@ -15,4 +15,5 @@ def generate(item):
  except Exception as e:result={'name':name,'status':'failed','error':str(e)}
  print(json.dumps({k:v for k,v in result.items() if k!='prompt'}),flush=True);return result
 with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(generate,items))
-Path('audio-generation.json').write_text(json.dumps({'provider':'ElevenLabs','assets':results},indent=2)+'\n')
+reports=Path('work/reports');reports.mkdir(parents=True,exist_ok=True)
+(reports/'audio-generation.json').write_text(json.dumps({'provider':'ElevenLabs','assets':results},indent=2)+'\n')
